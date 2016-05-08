@@ -6,4 +6,4 @@
 
 ##软件客户端功能导向图
 ###图1 
-！[tu1](https://github.com/gyh/Server-Broker/blob/master/Project%20documentation/image/liangxiang-1.jpg)
+![img](https://github.com/gyh/Server-Broker/blob/master/Project%20documentation/image/liangxiang-1.jpg)
