@@ -7,7 +7,7 @@
 ##软件客户端功能导向图
 客户端主要分为三部分：客户、房源、业绩
 ![img](https://github.com/gyh/Server-Broker/blob/master/Project%20documentation/image/liangxiang-1.jpg)
-其中客户主要功能
+####其中客户主要功能
   - 跳转搜索
   - 跳转足迹
   - 跳转客户详情
