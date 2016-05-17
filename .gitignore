@@ -1,10 +1,10 @@
 Project documentation/wangpeng.txt
-MyApplication/*.iml
-MyApplication/.gradle
-MyApplication/local.properties
-MyApplication/.idea
-MyApplication/.idea
-MyApplication/.DS_Store
-MyApplication/build
-MyApplication/captures
-MyApplication/gradle
+Broker/*.iml
+Broker/.gradle
+Broker/local.properties
+Broker/.idea
+Broker/.idea
+Broker/.DS_Store
+Broker/build
+Broker/captures
+Broker/gradle
