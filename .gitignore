@@ -1,0 +1,9 @@
+
+MyApplication/*.iml
+MyApplication/.gradle
+MyApplication/local.properties
+MyApplication/.idea
+MyApplication/.idea
+MyApplication/.DS_Store
+MyApplication/build
+MyApplication/captures
