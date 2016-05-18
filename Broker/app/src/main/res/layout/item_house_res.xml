@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+    <ImageView
+        android:id="@+id/img_house"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/ic_house_default"/>
+    <LinearLayout
+        android:layout_alignTop="@id/img_house"
+        android:layout_toRightOf="@id/img_house"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/app_important_text_color"
+            android:text="太原恒大山水城" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="13sp"
+            android:textColor="@color/app_body_text_color"
+            android:text="迎泽-迎泽" />
+        <TextView
+            android:id="@+id/tv_renovation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="13sp"
+            android:textColor="@color/app_body_text_color"
+            android:text="2013-10-15（现房）" />
+        <TextView
+            android:id="@+id/tv_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="13sp"
+            android:textColor="@color/app_theme_red"
+            android:text="正在销售" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="25dp"
+        android:textSize="18sp"
+        android:textColor="@color/app_theme_red"
+        android:text="7300元/㎡" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/img_house"
+        android:layout_marginRight="16dp"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@mipmap/ic_action_favorite"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/app_theme_red"
+            android:text="100"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -3,4 +3,19 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="toolbar_background">#f8f8f8</color>
+    <color name="app_background">#f2f2f2</color>
+    <color name="toolbar_title_text_color">#363636</color>
+    <color name="app_line_backgroud">#e3e3e3</color>
+    <color name="app_theme_red">#ff4650</color>
+    <color name="app_theme_red_se">#f0c8c8</color>
+    <color name="app_theme_red_trs">#ccc83232</color>
+    <color name="toolbar_menu_text_color">#696969</color>
+    <color name="app_important_text_color">#363636</color>
+    <color name="app_body_text_color">#727272</color>
+    <color name="app_body_sub_text_color">#969696</color>
+    <color name="app_notes_text_color">#B9B9B9</color>
+
+    <color name="app_white">#ffffff</color>
 </resources>
