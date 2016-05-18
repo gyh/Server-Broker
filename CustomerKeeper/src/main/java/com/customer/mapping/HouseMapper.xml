@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.customer.dao.HouseMapper" >
+  <resultMap id="BaseResultMap" type="com.customer.model.House" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_mobile" property="customerMobile" jdbcType="VARCHAR" />
+    <result column="house_info" property="houseInfo" jdbcType="VARCHAR" />
+    <result column="hous_area" property="housArea" jdbcType="DOUBLE" />
+    <result column="house_type" property="houseType" jdbcType="INTEGER" />
+    <result column="house_struct" property="houseStruct" jdbcType="INTEGER" />
+    <result column="house_price" property="housePrice" jdbcType="DOUBLE" />
+    <result column="house_addr" property="houseAddr" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, customer_id, customer_name, customer_mobile, house_info, hous_area, 
+    house_type, house_struct, house_price, house_addr, create_time, note
+  </sql>
+  <insert id="insert" parameterType="com.customer.model.House" useGeneratedKeys="true" keyProperty="id">
+    insert into house (user_id, customer_id,
+    customer_name, customer_mobile, house_info,
+    hous_area, house_type, house_struct,
+    house_price, house_addr, create_time,
+    note)
+    values ( #{userId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT},
+    #{customerName,jdbcType=VARCHAR}, #{customerMobile,jdbcType=VARCHAR}, #{houseInfo,jdbcType=VARCHAR},
+    #{housArea,jdbcType=DOUBLE}, #{houseType,jdbcType=INTEGER}, #{houseStruct,jdbcType=INTEGER},
+    #{housePrice,jdbcType=DOUBLE}, #{houseAddr,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+    #{note,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="pagefindhouseByUserId" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from house
+    where user_id = #{userId,jdbcType=BIGINT}
+    <if test="page != null and size!=null" >
+      limit #{page,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from house
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from house
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <update id="updateByPrimaryKeySelective" parameterType="com.customer.model.House" >
+    update house
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerMobile != null" >
+        customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="houseInfo != null" >
+        house_info = #{houseInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="housArea != null" >
+        hous_area = #{housArea,jdbcType=DOUBLE},
+      </if>
+      <if test="houseType != null" >
+        house_type = #{houseType,jdbcType=INTEGER},
+      </if>
+      <if test="houseStruct != null" >
+        house_struct = #{houseStruct,jdbcType=INTEGER},
+      </if>
+      <if test="housePrice != null" >
+        house_price = #{housePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="houseAddr != null" >
+        house_addr = #{houseAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.customer.model.House" >
+    update house
+    set user_id = #{userId,jdbcType=BIGINT},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_mobile = #{customerMobile,jdbcType=VARCHAR},
+      house_info = #{houseInfo,jdbcType=VARCHAR},
+      hous_area = #{housArea,jdbcType=DOUBLE},
+      house_type = #{houseType,jdbcType=INTEGER},
+      house_struct = #{houseStruct,jdbcType=INTEGER},
+      house_price = #{housePrice,jdbcType=DOUBLE},
+      house_addr = #{houseAddr,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

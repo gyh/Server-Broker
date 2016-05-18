@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.customer.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.customer.model.Customer" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="customer_type" property="customerType" jdbcType="INTEGER" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+    <result column="buy_demand" property="buyDemand" jdbcType="VARCHAR" />
+    <result column="buy_power" property="buyPower" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, name, mobile, create_time, customer_type, isdelete, buy_demand, buy_power
+  </sql>
+  <insert id="insert" parameterType="com.customer.model.Customer"  useGeneratedKeys="true" keyProperty="id">
+    insert into customer (user_id, name,
+    mobile, create_time, customer_type,
+    isdelete, buy_demand, buy_power
+    )
+    values ( #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+    #{mobile,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{customerType,jdbcType=INTEGER},
+    #{isdelete,jdbcType=INTEGER}, #{buyDemand,jdbcType=VARCHAR}, #{buyPower,jdbcType=INTEGER}
+    )
+  </insert>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.customer.model.Customer" >
+    update customer
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerType != null" >
+        customer_type = #{customerType,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="buyDemand != null" >
+        buy_demand = #{buyDemand,jdbcType=VARCHAR},
+      </if>
+      <if test="buyPower != null" >
+        buy_power = #{buyPower,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.customer.model.Customer" >
+    update customer
+    set user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      customer_type = #{customerType,jdbcType=INTEGER},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      buy_demand = #{buyDemand,jdbcType=VARCHAR},
+      buy_power = #{buyPower,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

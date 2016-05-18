@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.customer.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.customer.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="author_level" property="authorLevel" jdbcType="INTEGER" />
+    <result column="member_level" property="memberLevel" jdbcType="INTEGER" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mobile, passwd, reg_time, author_level, member_level, nickname
+  </sql>
+  <insert id="insert" parameterType="com.customer.model.User"  useGeneratedKeys="true" keyProperty="id">>
+    insert into user (mobile, passwd,
+    reg_time, author_level, member_level,
+    nickname)
+    values (#{mobile,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
+    #{regTime,jdbcType=TIMESTAMP}, #{authorLevel,jdbcType=INTEGER}, #{memberLevel,jdbcType=INTEGER},
+    #{nickname,jdbcType=VARCHAR})
+  </insert>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.customer.model.User" >
+    update user
+    <set >
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null" >
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorLevel != null" >
+        author_level = #{authorLevel,jdbcType=INTEGER},
+      </if>
+      <if test="memberLevel != null" >
+        member_level = #{memberLevel,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>
