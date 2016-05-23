@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:gravity="center_horizontal">
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_line_backgroud"/>
+
+    <EditText
+        android:digits="@string/register_name_digits"
+        android:id="@+id/ed_username"
+        style="@style/EditTextStyler"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:hint="@string/input_username"
+        android:background="@null"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_line_backgroud"/>
+
+    <EditText
+        android:id="@+id/ed_password"
+        style="@style/EditTextStyler"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:hint="@string/input_password"
+        android:digits="@string/register_name_digits"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:lines="1"
+        android:background="@null"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_line_backgroud"/>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_marginTop="20dp"
+        android:text="@string/btn_login"
+        style="@style/Mybutton_fill_big"/>
+
+    <TextView
+        android:id="@+id/go_register"
+        android:layout_marginTop="30dp"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_register"
+        android:layout_gravity="right"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/app_theme_red_trs"
+        android:textSize="14sp"
+        android:gravity="right"/>
+</LinearLayout>

@@ -39,6 +39,7 @@ dependencies {
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
 
+    compile 'com.google.code.gson:gson:2.2.4'
 
     compile 'homhomlin.lib:apsts:1.4.0'
 

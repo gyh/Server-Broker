@@ -1,9 +1,12 @@
 package com.roommate.android.broker.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.widget.BaseAdapter;
 
 
 import com.roommate.android.broker.R;
+import com.roommate.android.broker.customer.addcustomer.AddCustomerActivity;
+import com.roommate.android.broker.app.SearchActivity;
 import com.roommate.android.broker.common.view.SmoothListView.SmoothListView;
 
 
@@ -22,6 +27,8 @@ import com.roommate.android.broker.common.view.SmoothListView.SmoothListView;
  * 产前环节
  */
 public class FirstFragment extends Fragment implements SmoothListView.ISmoothListViewListener{
+
+    private static final int ADD_CUSTOMER = 100;
 
     private SmoothListView smoothListView;
 
@@ -48,6 +55,25 @@ public class FirstFragment extends Fragment implements SmoothListView.ISmoothLis
         smoothListView.setRefreshEnable(false);
         smoothListView.setLoadMoreEnable(true);
         smoothListView.setSmoothListViewListener(this);
+
+        FloatingActionButton fab =
+                (FloatingActionButton) view.findViewById(R.id.fab_add_customer);
+
+        fab.setImageResource(R.drawable.ic_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddCustomerActivity.startAddCustomer(FirstFragment.this,ADD_CUSTOMER);
+            }
+        });
+
+        view.findViewById(R.id.img_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
+
         return view;
     }
 
@@ -70,6 +96,16 @@ public class FirstFragment extends Fragment implements SmoothListView.ISmoothLis
                 smoothListView.stopLoadMore();
             }
         }, 2000);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ADD_CUSTOMER){
+            if(resultCode == Activity.RESULT_OK){
+                //刷新数据
+            }
+        }
     }
 
     class MyAdatper extends BaseAdapter{

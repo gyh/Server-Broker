@@ -27,9 +27,10 @@
                 android:layout_centerInParent="true"
                 android:text="客户信息"/>
             <ImageView
+                android:id="@+id/img_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/home_main_icon_f_n"
+                android:src="@mipmap/ic_action_search"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"/>
@@ -78,11 +79,11 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_add_customer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:background="@color/app_theme_red"
-        android:src="@mipmap/ic_done" />
+        android:src="@drawable/ic_add" />
 </android.support.design.widget.CoordinatorLayout>

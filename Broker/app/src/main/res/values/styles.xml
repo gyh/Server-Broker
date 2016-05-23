@@ -34,4 +34,77 @@
 
     </style>
 
+    <!-- 按钮自定义样式 填充（大）按钮 -->
+    <style name="Mybutton_fill_big">
+        <item name="android:background">@drawable/btn_bg_fill_red</item>
+        <item name="android:textColor">@color/app_white</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:layout_width">260dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+    <!-- 按钮自定义样式 填充（中）按钮 -->
+    <style name="Mybutton_fill_middle">
+        <item name="android:background">@drawable/btn_bg_fill_red</item>
+        <item name="android:textColor">@color/app_white</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:layout_width">130dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+    <!-- 按钮自定义样式 填充（小）按钮 -->
+    <style name="Mybutton_fill_small">
+        <item name="android:background">@drawable/btn_bg_fill_red</item>
+        <item name="android:textColor">@color/app_white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+    <!-- 按钮自定义样式 边框（大）按钮 -->
+    <style name="Mybutton_frame_big">
+        <item name="android:background">@drawable/btn_bg_frame_red</item>
+        <item name="android:textColor">#54616B</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">35dp</item>
+    </style>
+    <!-- 按钮自定义样式 边框（中）红按钮 -->
+    <style name="Mybutton_frame_middle">
+        <item name="android:background">@drawable/btn_bg_frame_red</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+    <!-- 按钮自定义样式 边框（中）灰按钮 -->
+    <style name="Mybutton_frame_middle_grey">
+        <item name="android:background">@drawable/btn_bg_frame_gray</item>
+        <item name="android:textColor">@color/toolbar_menu_text_color</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+    <!-- 按钮自定义样式 边框（小）按钮 -->
+    <style name="Mybutton_frame_small">
+        <item name="android:background">@drawable/btn_bg_frame_red</item>
+        <item name="android:textColor">@color/toolbar_menu_text_color</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+    <!-- 按钮自定义样式 边框（小）灰按钮 -->
+    <style name="Mybutton_frame_small_grey">
+        <item name="android:background">@drawable/btn_bg_frame_gray</item>
+        <item name="android:textColor">@color/toolbar_menu_text_color</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+
+    <style name="EditTextStyler">
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/app_body_text_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColorHint">@color/app_body_sub_text_color</item>
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
 </resources>

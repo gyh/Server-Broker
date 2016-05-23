@@ -87,5 +87,5 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:background="@color/app_theme_red"
-        android:src="@mipmap/ic_done" />
+        android:src="@drawable/ic_add" />
 </android.support.design.widget.CoordinatorLayout>
