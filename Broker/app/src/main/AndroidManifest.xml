@@ -2,16 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.roommate.android.broker">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
-        android:name=".app.BrokerApplication"
+        android:name=".common.core.BrokerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+
+        <activity android:name=".WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppStartLoad">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,18 +23,23 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:name=".app.SearchActivity"
+            android:name=".customer.SearchActivity"
             />
-        <activity android:name=".customer.addcustomer.AddCustomerActivity"
+        <activity android:name=".customer.AddCustomerActivity"
             android:label="@string/activity_addcustomer"
             android:screenOrientation="portrait"/>
-        <activity android:name=".app.LoginActivity"
+        <activity android:name=".user.LoginActivity"
             android:label="@string/activity_login"
             android:screenOrientation="portrait"/>
-        <activity android:name=".app.RegisterActivity"
+        <activity android:name=".user.RegisterActivity"
             android:label="@string/activity_register"
             android:screenOrientation="portrait"/>
     </application>

@@ -1,18 +1,12 @@
-package com.roommate.android.broker.app;
+package com.roommate.android.broker.user;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.roommate.android.broker.R;
-import com.roommate.android.broker.common.BaseActivity;
+import com.roommate.android.broker.common.LoginUtils;
+import com.roommate.android.broker.common.core.BaseActivity;
 
-
-import java.util.HashMap;
 
 /**
  * Created by GYH on 2016/3/23.
@@ -27,6 +21,14 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginUtils.loginss = true;
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
     }
 
     @Override

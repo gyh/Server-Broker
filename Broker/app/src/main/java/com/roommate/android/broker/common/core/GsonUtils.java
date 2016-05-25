@@ -9,7 +9,7 @@
  * 修改时间:
  * 修改内容：[修改内容]
  */
-package com.roommate.android.broker.common;
+package com.roommate.android.broker.common.core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

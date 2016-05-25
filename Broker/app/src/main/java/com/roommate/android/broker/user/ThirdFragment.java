@@ -1,4 +1,4 @@
-package com.roommate.android.broker.fragment;
+package com.roommate.android.broker.user;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

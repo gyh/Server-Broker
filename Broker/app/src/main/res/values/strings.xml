@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Broker</string>
+    <string name="app_name">中介笔记</string>
 
     <string name="smoothlistview_header_hint_normal">下拉刷新</string>
     <string name="smoothlistview_header_hint_ready">松开刷新数据</string>
@@ -29,5 +29,4 @@
     <string name="activity_login">登录界面</string>
     <string name="activity_register">注册界面</string>
     <string name="activity_addcustomer">添加客户</string>
-
 </resources>

@@ -5,16 +5,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.lhh.apst.library.AdvancedPagerSlidingTabStrip;
+import com.roommate.android.broker.common.core.BaseActivity;
 import com.roommate.android.broker.common.view.APSTSViewPager;
-import com.roommate.android.broker.fragment.FirstFragment;
-import com.roommate.android.broker.fragment.SecondFragment;
-import com.roommate.android.broker.fragment.ThirdFragment;
+import com.roommate.android.broker.customer.FirstFragment;
+import com.roommate.android.broker.house.SecondFragment;
+import com.roommate.android.broker.user.ThirdFragment;
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
 
 
 
@@ -37,11 +37,19 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         findViews();
         init();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected boolean needLogin() {
+        return true;
+    }
 
     //实例化view
     private void findViews(){

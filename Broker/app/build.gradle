@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.roommate.android.broker"
@@ -33,7 +33,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
@@ -41,6 +41,13 @@ dependencies {
 
     compile 'com.google.code.gson:gson:2.2.4'
 
+    //左右切换
     compile 'homhomlin.lib:apsts:1.4.0'
+    //主架构 包括数据库 请求 注解 图片管理（不用）
+    compile 'org.xutils:xutils:3.3.34'
+    //转圈
+    compile 'com.bigkoo:svprogresshud:1.0.2'
 
+
+    testCompile 'junit:junit:4.12'
 }

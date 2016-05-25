@@ -2,19 +2,16 @@
  * 文件名: DeviceIDHelper
  * 版    权：  Copyright Daman Tech. Co. Ltd. All Rights Reserved.
  * 描    述: [该类的简要描述]
- * 创建人: Jamin
+ * 创建人: 郭跃华
  * 创建时间:15/9/9
  *
  * 修改人：
  * 修改时间:
  * 修改内容：[修改内容]
  */
-package com.roommate.android.broker.common;
+package com.roommate.android.broker.common.core;
 
 import android.text.TextUtils;
-
-
-import com.roommate.android.broker.app.ApplicationHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;

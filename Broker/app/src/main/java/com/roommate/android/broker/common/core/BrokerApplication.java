@@ -1,4 +1,4 @@
-package com.roommate.android.broker.app;
+package com.roommate.android.broker.common.core;
 
 import android.app.Application;
 import android.app.Service;

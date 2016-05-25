@@ -1,7 +1,7 @@
 /*
  * @author: jackem.mojx@gmail.com
  */
-package com.roommate.android.broker.app;
+package com.roommate.android.broker.common.core;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -13,9 +13,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
 
-
-import com.roommate.android.broker.common.DeviceIDHelper;
-import com.roommate.android.broker.common.GsonUtils;
 
 import java.util.List;
 

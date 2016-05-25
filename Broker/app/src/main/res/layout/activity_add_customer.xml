@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:layout_marginLeft="16dp"
-                android:background="@color/app_theme_red"
+                android:background="@color/app_theme_color"
                 android:textColor="@color/app_white"
                 android:text="导入"/>
         </LinearLayout>
@@ -74,7 +74,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:layout_marginLeft="16dp"
-                android:background="@color/app_theme_red"
+                android:background="@color/app_theme_color"
                 android:textColor="@color/app_white"
                 android:text="100"/>
         </LinearLayout>

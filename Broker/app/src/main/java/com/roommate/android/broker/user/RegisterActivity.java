@@ -1,13 +1,11 @@
-package com.roommate.android.broker.app;
+package com.roommate.android.broker.user;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 
 
 import com.roommate.android.broker.R;
-import com.roommate.android.broker.common.BaseActivity;
+import com.roommate.android.broker.common.core.BaseActivity;
 
-import java.util.HashMap;
 
 /**
  * Created by GYH on 2016/3/24.

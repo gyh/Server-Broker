@@ -24,7 +24,7 @@
         android:layout_below="@id/tv_name"
         android:layout_alignLeft="@id/tv_name"
         android:layout_marginTop="10dp"
-        android:textColor="@color/app_theme_red"
+        android:textColor="@color/app_theme_color"
         android:text="急需购房"
         />
 
@@ -35,7 +35,7 @@
         android:layout_alignTop="@id/tv_desire"
         android:layout_toRightOf="@id/tv_desire"
         android:layout_marginLeft="8dp"
-        android:textColor="@color/app_theme_red"
+        android:textColor="@color/app_theme_color"
         android:text="80平米"/>
 
     <TextView

@@ -7,31 +7,18 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-
-    <style name="pagertab_icon_style">
-        <item name="android:background">@drawable/tab_bg_normal</item>
-        <item name="apTabBackground">@drawable/tab_bg_normal</item>
-        <item name="android:textSize">11sp</item>
-        <item name="android:textColor">@drawable/tab_color_select</item>
-        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
-        <item name="apTabIndicatorColor">@color/app_theme_red</item>
-        <item name="apTabUnderlineColor">#1A000000</item>
-        <item name="apTabDividerColor">#00000000</item>
-        <item name="apTabShouldExpand">false</item>
-        <item name="apTabPaddingLeftRight">8dp</item>
-        <item name="apTabPaddingTopBottom">4dp</item>
-        <item name="apTabTextSelectColor">@color/app_theme_red</item>
-    </style>
-
-    <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
-        <item name="android:typeface">monospace</item>
-    </style>
-
+    <!--没有头部主题-->
     <style name="AppTheme.NoActionBar" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
 
+    <!--启动主题-->
+    <style name="Theme.AppStartLoad" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@mipmap/start_theme_bg</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- 按钮自定义样式 填充（大）按钮 -->
@@ -105,6 +92,25 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColorHint">@color/app_body_sub_text_color</item>
         <item name="android:gravity">center_vertical</item>
+    </style>
 
+    <!--切换样式-->
+    <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="pagertab_icon_style">
+        <item name="android:background">@drawable/tab_bg_normal</item>
+        <item name="apTabBackground">@drawable/tab_bg_normal</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@drawable/tab_color_select</item>
+        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
+        <item name="apTabIndicatorColor">@color/app_theme_color</item>
+        <item name="apTabUnderlineColor">#1A000000</item>
+        <item name="apTabDividerColor">#00000000</item>
+        <item name="apTabShouldExpand">false</item>
+        <item name="apTabPaddingLeftRight">8dp</item>
+        <item name="apTabPaddingTopBottom">4dp</item>
+        <item name="apTabTextSelectColor">@color/app_theme_color</item>
     </style>
 </resources>

@@ -64,7 +64,7 @@
         android:text="@string/no_register"
         android:layout_gravity="right"
         android:layout_marginRight="15dp"
-        android:textColor="@color/app_theme_red_trs"
+        android:textColor="@color/app_important_redtext_color"
         android:textSize="14sp"
         android:gravity="right"/>
 </LinearLayout>

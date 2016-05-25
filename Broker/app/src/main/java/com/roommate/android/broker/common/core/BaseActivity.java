@@ -1,4 +1,4 @@
-package com.roommate.android.broker.common;
+package com.roommate.android.broker.common.core;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.roommate.android.broker.R;
-import com.roommate.android.broker.app.ApplicationHelper;
+import com.roommate.android.broker.common.LoginUtils;
+import com.roommate.android.broker.user.LoginActivity;
 
 import java.lang.ref.WeakReference;
 
@@ -31,10 +33,13 @@ public abstract class BaseActivity extends AppCompatActivity{
 
     protected static final int LOGIN_REQUEST = 1;
 
+    public SVProgressHUD svProgressHUD;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        svProgressHUD = new SVProgressHUD(this);
 
         //工具类
         ApplicationHelper.setCurrentActivity(this);
@@ -53,12 +58,12 @@ public abstract class BaseActivity extends AppCompatActivity{
 
 
         //判断是否需求登录
-//        if(needLogin()&&!LoginUtils.isLogin()){
-//            Intent intent = new Intent();
-//            intent.setClass(this, LoginActivity.class);
-//            startActivityForResult(intent,LOGIN_REQUEST);
-//            return;
-//        }
+        if(needLogin()&&!LoginUtils.isLogin()){
+            Intent intent = new Intent();
+            intent.setClass(this, LoginActivity.class);
+            startActivityForResult(intent,LOGIN_REQUEST);
+            return;
+        }
     }
 
     /**
