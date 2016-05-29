@@ -7,17 +7,48 @@ public class User {
 
     private String mobile;
 
-    private String passwd;
+    private String password;
 
-    private Date regTime;
+  //  private Date regTime;
 
     private Integer authorLevel;
 
     private Integer memberLevel;
 
     private String nickname;
+    
+    private String username;
+    
+    private String address;
+    
+    
+    
 
-    public Long getId() {
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -33,21 +64,15 @@ public class User {
         this.mobile = mobile == null ? null : mobile.trim();
     }
 
-    public String getPasswd() {
-        return passwd;
-    }
 
-    public void setPasswd(String passwd) {
-        this.passwd = passwd == null ? null : passwd.trim();
-    }
 
-    public Date getRegTime() {
+   /* public Date getRegTime() {
         return regTime;
     }
 
     public void setRegTime(Date regTime) {
         this.regTime = regTime;
-    }
+    }*/
 
     public Integer getAuthorLevel() {
         return authorLevel;
