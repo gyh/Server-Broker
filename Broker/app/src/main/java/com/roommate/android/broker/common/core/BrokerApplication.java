@@ -5,6 +5,9 @@ import android.app.Service;
 import android.content.res.Configuration;
 import android.os.Vibrator;
 
+import org.xutils.BuildConfig;
+import org.xutils.x;
+
 
 /**
  * Created by GYH on 2016/3/23.
@@ -17,6 +20,10 @@ public class BrokerApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+
+        //xUtils初始化
+        x.Ext.init(this);
+        x.Ext.setDebug(true);
 
         //上下文相关工具类
         ApplicationHelper.initEnv(this);

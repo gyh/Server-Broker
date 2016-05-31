@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.roommate.android.broker">
 
+    <!--xUtils 配置  开始-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--xUtils 配置  结束-->
 
     <application
         android:name=".common.core.BrokerApplication"
@@ -23,6 +25,11 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".BrokerActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -33,7 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".customer.SearchActivity"
             />
-        <activity android:name=".customer.AddCustomerActivity"
+        <activity android:name=".customer.AddEditCustomerDetail.AddEditCustomerActivity"
             android:label="@string/activity_addcustomer"
             android:screenOrientation="portrait"/>
         <activity android:name=".user.LoginActivity"
@@ -42,6 +49,9 @@
         <activity android:name=".user.RegisterActivity"
             android:label="@string/activity_register"
             android:screenOrientation="portrait"/>
+        <activity android:name=".AboutActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/activity_about"/>
     </application>
 
 </manifest>

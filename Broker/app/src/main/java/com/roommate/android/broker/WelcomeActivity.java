@@ -14,7 +14,7 @@ public class WelcomeActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -23,7 +23,7 @@ public class WelcomeActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this,BrokerActivity.class));
         finish();
     }
 }

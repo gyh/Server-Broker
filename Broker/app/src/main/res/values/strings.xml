@@ -26,7 +26,12 @@
 
     <string name="input_search_hint">请输入搜索内存</string>
 
-    <string name="activity_login">登录界面</string>
-    <string name="activity_register">注册界面</string>
+    <string name="activity_login">登录</string>
+    <string name="activity_register">注册</string>
     <string name="activity_addcustomer">添加客户</string>
+    <string name="activity_about">关于我们</string>
+
+    <string name="menu_sync">同步</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_date">日期</string>
 </resources>

@@ -35,19 +35,23 @@
         android:layout_alignTop="@id/tv_desire"
         android:layout_toRightOf="@id/tv_desire"
         android:layout_marginLeft="8dp"
-        android:textColor="@color/app_theme_color"
+        android:textColor="@color/app_important_text_color"
         android:text="80平米"/>
 
     <TextView
-        android:id="@+id/tv_describe"
+        android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_area"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/tv_name"
         android:layout_toRightOf="@id/tv_area"
+        android:layout_alignTop="@id/tv_desire"
         android:layout_marginLeft="8dp"
-        android:text="客户描述客户描述客户描述客户描述客户描述客户描述客户描述客户描述客户描述客户描述客户描述"
-        android:lines="1"
-        android:ellipsize="end"/>
+        android:textColor="@color/app_important_redtext_color"
+        android:textSize="13sp"
+        android:text="预约日期：2016-5-17"/>
+
+
 
     <TextView
         android:id="@+id/tv_phone"
@@ -55,20 +59,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/tv_name"
-        android:layout_marginRight="16dp"
-        android:text="1324128/396"/>
-
-
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="-8dp"
+        android:text="1324128/396"
+        android:padding="8dp"/>
 
     <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_describe"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:layout_below="@id/tv_area"
         android:layout_marginTop="8dp"
-        android:textColor="@color/app_body_sub_text_color"
+        android:layout_alignLeft="@id/tv_name"
+        android:layout_below="@id/tv_area"
+        android:text="客户描述客户描述客户描述客户描述客户描述客户描述客户描述客户描述客户描述客户描述客户描述"
         android:textSize="12sp"
-        android:text="2016-5-17"/>
+        android:textColor="@color/app_body_text_color"
+        android:layout_marginRight="16dp"
+        android:lines="1"
+        android:ellipsize="end"/>
+
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ViewUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.LoginUtils;
 import com.roommate.android.broker.user.LoginActivity;
+
+import org.xutils.x;
 
 import java.lang.ref.WeakReference;
 
@@ -43,7 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity{
 
         //工具类
         ApplicationHelper.setCurrentActivity(this);
-
         //同步
         mHandler = new FramHandler(this);
 
@@ -103,7 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity{
      *
      * @param runnable Runnable
      */
-    protected final void post(final Runnable runnable) {
+    public final void post(final Runnable runnable) {
         if (mHandler != null) {
             mHandler.post(new Runnable() {
                 @Override
@@ -205,6 +207,12 @@ public abstract class BaseActivity extends AppCompatActivity{
      */
     protected void handleStateMessage(Message msg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     private static class FramHandler extends Handler {

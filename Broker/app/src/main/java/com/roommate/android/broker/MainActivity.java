@@ -10,7 +10,7 @@ import android.os.Bundle;
 import com.lhh.apst.library.AdvancedPagerSlidingTabStrip;
 import com.roommate.android.broker.common.core.BaseActivity;
 import com.roommate.android.broker.common.view.APSTSViewPager;
-import com.roommate.android.broker.customer.FirstFragment;
+import com.roommate.android.broker.customer.list.FirstFragment;
 import com.roommate.android.broker.house.SecondFragment;
 import com.roommate.android.broker.user.ThirdFragment;
 

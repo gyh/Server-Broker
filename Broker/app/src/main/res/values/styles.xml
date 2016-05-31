@@ -1,12 +1,20 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="AppTheme.Base">
+
+    </style>
+
+    <style name="Theme.navheader" parent="ThemeOverlay.AppCompat.Light">
+    </style>
+
     <!--没有头部主题-->
     <style name="AppTheme.NoActionBar" >
         <item name="windowActionBar">false</item>
@@ -14,11 +22,15 @@
     </style>
 
     <!--启动主题-->
-    <style name="Theme.AppStartLoad" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@mipmap/start_theme_bg</item>
+    <style name="Theme.AppStartLoad" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/startlog</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:textColorPrimary">@color/toolbar_title_text_color</item>
     </style>
 
     <!-- 按钮自定义样式 填充（大）按钮 -->
