@@ -1,8 +1,10 @@
 package com.roommate.android.broker.customer.data;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.common.base.Objects;
+import com.google.gson.Gson;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -69,11 +71,19 @@ public final class Customer {
         return inputDate;
     }
 
+    /**
+     * 判空  id不能为空
+     * 名字不能为空
+     * 手机号不能为空
+     * 面积或者购房时间不能为空
+     * 描述或者预定日期可以为空
+     * @return
+     */
     public boolean isEmpty() {
-        return (mId == null || "".equals(name)) &&
+        return (TextUtils.isEmpty(mId)) &&
+                ("".equals(name))&&
                 ("".equals(phoneNumber))&&
-                ("".equals(houseArea) || "".equals(desire))&&
-                ( "".equals(describe) || "".equals(inputDate));
+                ("".equals(houseArea) || "".equals(desire));
     }
 
     @Override
@@ -98,6 +108,7 @@ public final class Customer {
     @Override
     public String toString() {
         //todo 需要将数据转换为可以用的数据
-        return "Customer with name " + name;
+        Customer customer = new Customer(mId,name,phoneNumber,desire,houseArea,describe,inputDate);
+        return new Gson().toJson(customer);
     }
 }

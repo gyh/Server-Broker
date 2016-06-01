@@ -63,7 +63,6 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
     }
 
     @Nullable
@@ -81,13 +80,13 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
                 DialogUtils.twoButtonDialog(getActivity(), "提示信息", "选择操作", "编辑", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Customer customer = (Customer)myAdatper.getItem(position);
+                        Customer customer = (Customer)myAdatper.getItem(position-1);
                         mPresenter.editCustomer(customer.getmId());
                     }
                 }, "删除", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Customer customer = (Customer)myAdatper.getItem(position);
+                        Customer customer = (Customer)myAdatper.getItem(position-1);
                         delCustomer(customer.getmId());
                     }
                 });
@@ -112,6 +111,8 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
             }
         });
 
+        mPresenter.start();
+
         return view;
     }
 
@@ -133,49 +134,91 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
-        if(active){
-            ((BaseActivity)getActivity()).svProgressHUD.showWithProgress("正在加载", SVProgressHUD.SVProgressHUDMaskType.None);
-        }else {
-            ((BaseActivity)getActivity()).svProgressHUD.dismiss();
-        }
+    public void setLoadingIndicator(final boolean active) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if(active){
+                    ((BaseActivity)getActivity()).svProgressHUD.showWithProgress("正在加载", SVProgressHUD.SVProgressHUDMaskType.Clear);
+                }else {
+                    ((BaseActivity)getActivity()).svProgressHUD.dismiss();
+                }
+            }
+        });
     }
 
     @Override
-    public void showCustomers(List<Customer> customers) {
-        myAdatper.replaceData(customers);
-        ((BaseActivity)getActivity()).svProgressHUD.showSuccessWithStatus("正在加载", SVProgressHUD.SVProgressHUDMaskType.None);
+    public void showCustomers(final List<Customer> customers) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                myAdatper.replaceData(customers);
+                ((BaseActivity)getActivity()).svProgressHUD.showSuccessWithStatus("正在加载", SVProgressHUD.SVProgressHUDMaskType.Clear);
+            }
+        });
     }
 
     @Override
     public void showAddCustomer() {
-        Intent intent = new Intent(getContext(), AddEditCustomerActivity.class);
-        startActivityForResult(intent, ADD_CUSTOMER);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getContext(), AddEditCustomerActivity.class);
+                startActivityForResult(intent, ADD_CUSTOMER);
+            }
+        });
+
     }
 
     @Override
     public void showCustomerDetailsUi(String CustomerId) {
-        AddEditCustomerActivity.startAddCustomer(CustomerListFragment.this,ADD_CUSTOMER);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                AddEditCustomerActivity.startAddCustomer(CustomerListFragment.this,ADD_CUSTOMER);
+            }
+        });
     }
 
     @Override
     public void showLoadingCustomersError() {
-        ((BaseActivity)getActivity()).svProgressHUD.showErrorWithStatus("哎呀，失败", SVProgressHUD.SVProgressHUDMaskType.None);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                ((BaseActivity)getActivity()).svProgressHUD.showErrorWithStatus("哎呀，失败", SVProgressHUD.SVProgressHUDMaskType.Clear);
+            }
+        });
     }
 
     @Override
     public void showNoCustomers() {
-        ((BaseActivity)getActivity()).svProgressHUD.showErrorWithStatus("哎呀，没有数据", SVProgressHUD.SVProgressHUDMaskType.None);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                ((BaseActivity)getActivity()).svProgressHUD.showErrorWithStatus("哎呀，没有数据", SVProgressHUD.SVProgressHUDMaskType.Clear);
+            }
+        });
     }
 
     @Override
     public void showSuccessfullyDeletedMessage() {
-        ((BaseActivity)getActivity()).svProgressHUD.showErrorWithStatus("删除成功", SVProgressHUD.SVProgressHUDMaskType.None);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                ((BaseActivity)getActivity()).svProgressHUD.showSuccessWithStatus("删除成功", SVProgressHUD.SVProgressHUDMaskType.Clear);
+            }
+        });
     }
 
     @Override
     public void showErrorfullyDeletedMessage() {
-        ((BaseActivity)getActivity()).svProgressHUD.showErrorWithStatus("删除失败", SVProgressHUD.SVProgressHUDMaskType.None);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                ((BaseActivity)getActivity()).svProgressHUD.showErrorWithStatus("删除失败", SVProgressHUD.SVProgressHUDMaskType.Clear);
+            }
+        });
+
     }
 
     @Override
@@ -185,8 +228,13 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
 
 
     @Override
-    public void showEditCustomer(String customerId) {
-       AddEditCustomerActivity.startForResult(CustomerListFragment.this,EDIT_CUSTOMER,customerId);
+    public void showEditCustomer(final String customerId) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                AddEditCustomerActivity.startForResult(CustomerListFragment.this,EDIT_CUSTOMER,customerId);
+            }
+        });
     }
 
     @Override

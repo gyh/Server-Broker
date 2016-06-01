@@ -59,6 +59,7 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
     @Override
     public void getCustomers(@NonNull final LoadCustomersCallback callback) {
 
+        // TODO: 2016/6/1 传入操作数据
 
         RequestParams requestParams = new RequestParams("http://search.tootoo.cn/searchMB/goods");
         requestParams.addQueryStringParameter("channelType","2");
@@ -69,31 +70,38 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
         LogUtil.d("  ----Input---   " + requestParams.toString());
         x.http().get(requestParams, new Callback.CommonCallback<String>() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(final String result) {
 
                 LogUtil.d("  ----output---   " + result);
 
-                ArrayList<Customer> strings = new ArrayList<>();
-                JsonParser jsonParser = new JsonParser();
-                JsonObject resultObj = jsonParser.parse(result).getAsJsonObject().get("result").getAsJsonObject();
-                JsonArray rows = resultObj.get("rows").getAsJsonArray();
-                for(int i=0;i<rows.size();i++){
-                    JsonObject row = rows.get(i).getAsJsonObject();
-                    Customer house = new Customer(System.currentTimeMillis()+"",
-                            "郭跃华"+i,
-                            "13240123693",
-                            "3",
-                            "90",
-                            row.get("goodsName").getAsString(),
-                            "2016-9-11");
-                    strings.add(house);
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                REMOTE_OP_DATA_MAP.clear();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayList<Customer> strings = new ArrayList<>();
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject resultObj = jsonParser.parse(result).getAsJsonObject().get("result").getAsJsonObject();
+                        JsonArray rows = resultObj.get("rows").getAsJsonArray();
+                        for(int i=0;i<3;i++){
+//                        JsonObject row = rows.get(i).getAsJsonObject();
+                            Customer house = new Customer(System.currentTimeMillis()+"",
+                                    "郭跃华"+i,
+                                    "13240123693",
+                                    "3",
+                                    "90",
+                                    "客户描述经典款了房间里的康师傅几点睡了开发就考虑到",
+                                    "2016-9-11");
+                            strings.add(house);
+                            try {
+                                Thread.sleep(1);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        callback.onCustomersLoader(strings);
                     }
-                }
-                callback.onCustomersLoader(strings);
+                }).start();
             }
 
             @Override
@@ -125,11 +133,18 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
                 LogUtil.d("  ----output---   " + result);
                 Handler handler = new Handler();
+                final Customer house = new Customer(System.currentTimeMillis()+"",
+                        "郭跃华",
+                        "13240123693",
+                        "3",
+                        "90",
+                        "123151651565465",
+                        "2016-9-11");
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         //todo 处理数据
-                        callback.onCustomerLoader(null);
+                        callback.onCustomerLoader(house);
                     }
                 });
             }
@@ -154,14 +169,18 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
     @Override
     public void saveCustomer(@NonNull Customer customer) {
         checkNotNull(customer);
-        RemoteOpData remoteOpData = new RemoteOpData("111","1","1",customer.toString());
+        //// TODO: 2016/6/1   录入提交服务端操作记录 操作id 操作数据类型 操作类型  操作数据
+        String mId = System.currentTimeMillis()+"";
+        RemoteOpData remoteOpData = new RemoteOpData(mId,"1","1",customer.toString());
         REMOTE_OP_DATA_MAP.put(remoteOpData.getMid(),remoteOpData);
     }
 
     @Override
     public void updataCustomer(@NonNull Customer customer) {
         checkNotNull(customer);
-        RemoteOpData remoteOpData = new RemoteOpData("111","2","1",customer.toString());
+        //// TODO: 2016/6/1   录入提交服务端操作记录 操作id 操作数据类型 操作类型  操作数据
+        String mId = System.currentTimeMillis()+"";
+        RemoteOpData remoteOpData = new RemoteOpData(mId,"1","2",customer.toString());
         REMOTE_OP_DATA_MAP.put(remoteOpData.getMid(),remoteOpData);
     }
 
@@ -178,7 +197,9 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
     @Override
     public void deleteCustomer(@NonNull String customerId) {
         checkNotNull(customerId);
-        RemoteOpData remoteOpData = new RemoteOpData("111","2","1",customerId);
+        //// TODO: 2016/6/1   录入提交服务端操作记录 操作id 操作数据类型 操作类型  操作数据
+        String mId = System.currentTimeMillis()+"";
+        RemoteOpData remoteOpData = new RemoteOpData(mId,"1","3",customerId);
         REMOTE_OP_DATA_MAP.put(remoteOpData.getMid(),remoteOpData);
     }
 }
