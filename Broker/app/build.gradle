@@ -41,6 +41,8 @@ dependencies {
 
     compile "com.google.guava:guava:$rootProject.guavaVersion"
 
+    compile "com.bigkoo:pickerview:$rootProject.pickerviewVersion"
+
     compile 'com.google.code.gson:gson:2.2.4'
 
     //左右切换

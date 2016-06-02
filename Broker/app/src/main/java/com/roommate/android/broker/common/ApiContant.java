@@ -23,4 +23,7 @@ public class ApiContant {
         }
     }
 
+    public class  KEYVAULE{
+        public static final String IS_FIRST = "isfirst";
+    }
 }

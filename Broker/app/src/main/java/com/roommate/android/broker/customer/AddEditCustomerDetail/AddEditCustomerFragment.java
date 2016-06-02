@@ -6,15 +6,28 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.TimePickerView;
 import com.roommate.android.broker.R;
+import com.roommate.android.broker.common.PhoneNumberUtils;
+import com.roommate.android.broker.common.StringUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -31,10 +44,25 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
 
     private Handler mHandler;
 
-    private EditText tvName;
+    //时间选择器
+    private TimePickerView pvTime;
+    //月份
+    private ArrayList<String> optionsDesireItems = new ArrayList<String>();
+    //面积
+    private ArrayList<String> optionsHouseAreaItems = new ArrayList<String>();
+    //购买日期选择器
+    private OptionsPickerView pvOptionsDesire;
+    private OptionsPickerView pvOptionsHouseArea;
 
-    private EditText tvPhoneNumber;
-    private EditText tvHouseAare;
+    private TextView tvOrderDate;
+    private TextView tvDesires;
+    private TextView tvHouseArea;
+    private TextInputEditText editName;
+    private TextInputEditText editphoneNumber;
+    private TextInputLayout inputlayoutName;
+    private TextInputLayout inputlayoutPhoneNumber;
+    private EditText editDescribe;
+
 
     public static AddEditCustomerFragment newInstance() {
         return new AddEditCustomerFragment();
@@ -58,14 +86,27 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isNewTask()) {
-//                    addEditCustomerPresenter.createCustomer(
-//                            mTitle.getText().toString(),
-//                            mDescription.getText().toString());
+                if (isNewCustomer()) {
+                    if(checkInput()){
+                        presenter.createCustomer(
+                                editName.getText().toString(),
+                                editphoneNumber.getText().toString(),
+                                tvDesires.getText().toString(),
+                                tvHouseArea.getText().toString(),
+                                editDescribe.getText().toString(),
+                                tvOrderDate.getText().toString());
+                    }
+
                 } else {
-//                    addEditCustomerPresenter.updateCustomer(
-//                            mTitle.getText().toString(),
-//                            mDescription.getText().toString());
+                    if(checkInput()){
+                        presenter.updateCustomer(
+                                editName.getText().toString(),
+                                editphoneNumber.getText().toString(),
+                                tvDesires.getText().toString(),
+                                tvHouseArea.getText().toString(),
+                                editDescribe.getText().toString(),
+                                tvOrderDate.getText().toString());
+                    }
                 }
 
             }
@@ -76,15 +117,23 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.add_edit_customer, container, false);
-//        tvName = (EditText) root.findViewById(R.id.);
-//        tvHouseAare = (EditText) root.findViewById(R.id.tv_area);
-//        tvPhoneNumber = (EditText) root.findViewById(R.id.tv_phone);
+
+        //初始化View
+        editDescribe = (EditText)root.findViewById(R.id.edit_describe);
+        tvOrderDate = (TextView) root.findViewById(R.id.tv_orderDate);
+        tvDesires = (TextView)root.findViewById(R.id.tv_desire);
+        tvHouseArea = (TextView)root.findViewById(R.id.tv_housearea);
+        editName = (TextInputEditText) root.findViewById(R.id.input_edit_name);
+        editphoneNumber = (TextInputEditText) root.findViewById(R.id.input_edit_phonenumber);
+        inputlayoutName = (TextInputLayout) root.findViewById(R.id.input_layout_name);
+        inputlayoutPhoneNumber = (TextInputLayout) root.findViewById(R.id.input_layout_phonenumber);
+
+        initDesireOption(root);
+        initOrderDate(root);
+        initHouseAreaOption(root);
+
         setHasOptionsMenu(true);
         setRetainInstance(true);
-
-        TextInputLayout inputLayout = (TextInputLayout)root.findViewById(R.id.textInputLayout);
-        inputLayout.setError("123456789");
-        inputLayout.setErrorEnabled(false);
 
         return root;
     }
@@ -114,7 +163,7 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
 
     @Override
     public boolean isActive() {
-        return false;
+        return isAdded();
     }
 
     @Override
@@ -158,8 +207,157 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
         }
     }
 
-    private boolean isNewTask() {
+    private boolean checkInput(){
+        boolean isOk = true;
+        if(TextUtils.isEmpty(editName.getText().toString())){
+            isOk = false;
+            inputlayoutName.setError("客户名称不能为空");
+            inputlayoutName.setErrorEnabled(true);
+        }else if(TextUtils.isEmpty(editphoneNumber.getText().toString())){
+            isOk = false;
+            showToast("手机号不能为空");
+        }else if(TextUtils.isEmpty(tvHouseArea.getText().toString())){
+            isOk = false;
+            showToast("购买面积不能为空");
+        }else if(TextUtils.isEmpty(tvDesires.getText().toString())){
+            isOk = false;
+            showToast("购房日期不能为空");
+        }else if(StringUtils.IshasSpecialChar(editName.getText().toString())){
+            isOk = false;
+            showToast("用户名名称输入有误");
+        }else if(!PhoneNumberUtils.isPhoneNumberValid(editphoneNumber.getText().toString())){
+            isOk = false;
+            showToast("手机号输入有误");
+        }else if(!TextUtils.isEmpty(tvDesires.getText().toString()) &&
+                StringUtils.IshasSpecialChar(tvDesires.getText().toString())){
+            isOk = false;
+            showToast("客户描述输入有误");
+        }
+        return isOk;
+    }
+
+    private void showToast(String str){
+        Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 判断是否新建
+     * @return
+     */
+    private boolean isNewCustomer() {
         return mEditedCustomerId == null;
+    }
+
+    /**
+     * 获取时间数据
+     * @param date
+     * @return
+     */
+    private String getTime(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return format.format(date);
+    }
+
+    /**
+     * 初始化预选日期
+     * @param root
+     */
+    private void initOrderDate(View root){
+        //时间选择器
+        pvTime = new TimePickerView(this.getContext(), TimePickerView.Type.ALL);
+        pvTime.setTime(new Date());
+        pvTime.setCyclic(false);
+        pvTime.setCancelable(true);
+        //时间选择后回调
+        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+
+            @Override
+            public void onTimeSelect(Date date) {
+                tvOrderDate.setText(getTime(date));
+            }
+        });
+
+        root.findViewById(R.id.layout_orderdate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pvTime.show();
+            }
+        });
+    }
+
+    /**
+     * 初始化最早购房时间
+     * @param root
+     */
+    private void initDesireOption(View root){
+        //选项选择器
+        pvOptionsDesire = new OptionsPickerView(this.getContext());
+        //选项1
+        for (int i=1;i<13;i++){
+            optionsDesireItems.add(i+"");
+        }
+        //三级联动效果
+        pvOptionsDesire.setPicker(optionsDesireItems);
+        //设置选择的三级单位
+        pvOptionsDesire.setLabels("个月以内");
+        pvOptionsDesire.setTitle("选择最早购房时间");
+        pvOptionsDesire.setCyclic(true);
+        //监听确定选择按钮
+        pvOptionsDesire.setSelectOptions(1);
+        pvOptionsDesire.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                //返回的分别是三个级别的选中位置
+                tvDesires.setText(optionsDesireItems.get(options1));
+            }
+        });
+        //点击弹出选项选择器
+        root.findViewById(R.id.view_desire).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                pvOptionsDesire.show();
+            }
+        });
+    }
+
+    /**
+     * 初始化最早购房时间
+     * @param root
+     */
+    private void initHouseAreaOption(View root){
+        //选项选择器
+        pvOptionsHouseArea = new OptionsPickerView(this.getContext());
+        //选项1
+        for (int i=5;i<21;i++){
+            String str = (i*10)+"";
+            optionsHouseAreaItems.add(str);
+        }
+        //三级联动效果
+        pvOptionsHouseArea.setPicker(optionsHouseAreaItems);
+        //设置选择的三级单位
+        pvOptionsHouseArea.setLabels("平米");
+        pvOptionsHouseArea.setTitle("选择购房面积");
+        pvOptionsHouseArea.setCyclic(true);
+        //监听确定选择按钮
+        pvOptionsHouseArea.setSelectOptions(1);
+        pvOptionsHouseArea.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                //返回的分别是三个级别的选中位置
+                tvHouseArea.setText(optionsHouseAreaItems.get(options1));
+            }
+        });
+        //点击弹出选项选择器
+        root.findViewById(R.id.view_housearea).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                pvOptionsHouseArea.show();
+            }
+        });
     }
 
 }

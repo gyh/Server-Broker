@@ -33,4 +33,5 @@ ext {
     // App dependencies
     supportLibraryVersion = '23.3.0'
     guavaVersion = '18.0'
+    pickerviewVersion ='2.0.8'
 }

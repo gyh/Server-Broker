@@ -21,9 +21,13 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 
+import com.roommate.android.broker.common.ApiContant;
+import com.roommate.android.broker.common.PreferencesUtil;
 import com.roommate.android.broker.customer.data.Customer;
 import com.roommate.android.broker.customer.data.source.CustomerDataSource;
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
+
+import org.xutils.common.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +45,6 @@ public class CustomersPresenter implements CustomerContract.Presenter {
 
     private final CustomerContract.View mCustomersView;
 
-    private boolean mFirstLoad = true;
 
     public CustomersPresenter(@NonNull CustomerRepository mCustomerRepository,@NonNull CustomerContract.View mCustomersView) {
         this.mCustomerRepository = checkNotNull(mCustomerRepository,"mCustomerRepository  is not null");
@@ -54,6 +57,7 @@ public class CustomersPresenter implements CustomerContract.Presenter {
 
     @Override
     public void result(int requestCode, int resultCode) {
+        LogUtil.d("requestCode = "+ requestCode +" resultCode "+ resultCode);
         if(requestCode==CustomerListFragment.ADD_CUSTOMER){
             if(resultCode == Activity.RESULT_OK){
                 loadCustomers(false);
@@ -69,8 +73,11 @@ public class CustomersPresenter implements CustomerContract.Presenter {
 
     @Override
     public void loadCustomers(boolean forceUpdate) {
-        loadCustomers(forceUpdate||mFirstLoad,true);
-        mFirstLoad = false;
+        Boolean isFisrt = PreferencesUtil.getAttrBoolean(ApiContant.KEYVAULE.IS_FIRST,true);
+
+        loadCustomers(forceUpdate||isFisrt,true);
+
+        PreferencesUtil.setAttr(ApiContant.KEYVAULE.IS_FIRST,false);
     }
 
     @Override

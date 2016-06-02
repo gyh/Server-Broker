@@ -130,6 +130,7 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         mPresenter.result(requestCode, resultCode);
     }
 
@@ -163,19 +164,18 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getContext(), AddEditCustomerActivity.class);
-                startActivityForResult(intent, ADD_CUSTOMER);
+                AddEditCustomerActivity.startAddCustomer(CustomerListFragment.this,ADD_CUSTOMER);
             }
         });
 
     }
 
     @Override
-    public void showCustomerDetailsUi(String CustomerId) {
+    public void showCustomerDetailsUi(final String customerId) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                AddEditCustomerActivity.startAddCustomer(CustomerListFragment.this,ADD_CUSTOMER);
+                AddEditCustomerActivity.startForResult(CustomerListFragment.this,ADD_CUSTOMER,customerId);
             }
         });
     }

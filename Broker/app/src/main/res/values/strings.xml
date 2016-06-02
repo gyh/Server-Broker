@@ -38,4 +38,16 @@
 
     <string name="add_hint_name">请输入客户名称</string>
     <string name="add_error_name">客户名称不能为空</string>
+
+    <string name="add_hint_phonenumber">请输入手机号</string>
+    <string name="add_error_phonenumber">手机号输入错误</string>
+    <string name="add_empty_phonenumber">手机号不能为空</string>
+
+    <string name="add_select_houseArea">请选择购房面积</string>
+
+    <string name="add_select_desire">请选择购房时间</string>
+
+    <string name="add_select_orderdate">请选择预约日期</string>
+
+
 </resources>

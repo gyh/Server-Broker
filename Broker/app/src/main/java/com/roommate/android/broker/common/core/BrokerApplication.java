@@ -5,6 +5,8 @@ import android.app.Service;
 import android.content.res.Configuration;
 import android.os.Vibrator;
 
+import com.roommate.android.broker.common.PreferencesUtil;
+
 import org.xutils.BuildConfig;
 import org.xutils.x;
 
@@ -24,6 +26,9 @@ public class BrokerApplication extends Application {
         //xUtils初始化
         x.Ext.init(this);
         x.Ext.setDebug(true);
+
+        //初始化SharedPreference
+        PreferencesUtil.initContext(this);
 
         //上下文相关工具类
         ApplicationHelper.initEnv(this);
