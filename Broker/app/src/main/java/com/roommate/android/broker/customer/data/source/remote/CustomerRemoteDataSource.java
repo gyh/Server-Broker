@@ -59,6 +59,12 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
     @Override
     public void getCustomers(@NonNull final LoadCustomersCallback callback) {
 
+        // TODO: 2016/6/3  接口开发
+        if(true){
+            callback.onDataNotAvailable();
+            return;
+        }
+
         // TODO: 2016/6/1 传入操作数据
 
         RequestParams requestParams = new RequestParams("http://search.tootoo.cn/searchMB/goods");

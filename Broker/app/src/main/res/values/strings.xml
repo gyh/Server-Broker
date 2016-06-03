@@ -49,5 +49,11 @@
 
     <string name="add_select_orderdate">请选择预约日期</string>
 
+    <string name="action_phone">导入手机号</string>
 
+    <string-array name="phonetypearr">
+        <item>来电</item>
+        <item>已拨</item>
+        <item>未接</item>
+    </string-array>
 </resources>

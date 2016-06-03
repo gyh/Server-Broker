@@ -10,7 +10,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.roommate.android.broker.R;
+import com.roommate.android.broker.common.DateUtils;
 import com.roommate.android.broker.common.PhoneNumberUtils;
 import com.roommate.android.broker.common.StringUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
@@ -128,6 +128,13 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
         inputlayoutName = (TextInputLayout) root.findViewById(R.id.input_layout_name);
         inputlayoutPhoneNumber = (TextInputLayout) root.findViewById(R.id.input_layout_phonenumber);
 
+        root.findViewById(R.id.btn_inset).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhoneNumberUtils.alertPhoneType(getActivity(),editphoneNumber);
+            }
+        });
+
         initDesireOption(root);
         initOrderDate(root);
         initHouseAreaOption(root);
@@ -136,6 +143,12 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
         setRetainInstance(true);
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
     @Override
@@ -168,32 +181,34 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
 
     @Override
     public void setName(String name) {
-
+        editName.setText(name);
+        checkNotNull(name);
+        editName.setSelection(name.length());
     }
 
     @Override
     public void setPhoneNumber(String phoneNumber) {
-
+        editphoneNumber.setText(phoneNumber);
     }
 
     @Override
     public void setDesire(String desire) {
-
+        tvDesires.setText(desire);
     }
 
     @Override
     public void setHouseArea(String houseArea) {
-
+        tvHouseArea.setText(houseArea);
     }
 
     @Override
     public void setDescries(String describe) {
-
+        editDescribe.setText(describe);
     }
 
     @Override
     public void setOrderDate(String inputDate) {
-
+        tvOrderDate.setText(inputDate);
     }
 
     @Override
@@ -248,15 +263,7 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
         return mEditedCustomerId == null;
     }
 
-    /**
-     * 获取时间数据
-     * @param date
-     * @return
-     */
-    private String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        return format.format(date);
-    }
+
 
     /**
      * 初始化预选日期
@@ -273,7 +280,7 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
 
             @Override
             public void onTimeSelect(Date date) {
-                tvOrderDate.setText(getTime(date));
+                tvOrderDate.setText(DateUtils.getTime(date));
             }
         });
 

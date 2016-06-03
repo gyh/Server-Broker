@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.DialogUtils;
+import com.roommate.android.broker.common.PhoneNumberUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
 import com.roommate.android.broker.common.view.SmoothListView.SmoothListView;
 import com.roommate.android.broker.customer.AddEditCustomerDetail.AddEditCustomerActivity;
@@ -330,7 +331,7 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
             stringBuffer.append(" 平米");
             holder.tvArea.setText(stringBuffer);
 
-            holder.tvPhoneNumber.setText(customer.getPhoneNumber());
+            holder.tvPhoneNumber.setText(PhoneNumberUtils.hidePhoneNumber(customer.getPhoneNumber()));
 
             stringBuffer = new StringBuffer();
             stringBuffer.append("预约时间：");

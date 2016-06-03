@@ -9,8 +9,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.roommate.android.broker.common.ActivityUtils;
+import com.roommate.android.broker.common.DateUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
 import com.roommate.android.broker.customer.SearchActivity;
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
@@ -19,12 +22,18 @@ import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDat
 import com.roommate.android.broker.customer.list.CustomerListFragment;
 import com.roommate.android.broker.customer.list.CustomersPresenter;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  * Created by GYH on 2016/5/28.
  */
 public class BrokerActivity extends BaseActivity{
 
+    //时间选择器
+    private TimePickerView pvTime;
 
     private CustomersPresenter mCustomersPresenter;
 
@@ -41,6 +50,8 @@ public class BrokerActivity extends BaseActivity{
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        //初始化时间选择
+        initOrderDate();
 
         // Set up the navigation drawer.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,6 +102,7 @@ public class BrokerActivity extends BaseActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_date:
+                pvTime.show();
                 break;
             case R.id.action_search:
                 startActivity(new Intent(BrokerActivity.this, SearchActivity.class));
@@ -108,6 +120,27 @@ public class BrokerActivity extends BaseActivity{
                 return true;
         }
         return true;
+    }
+
+    /**
+     * 初始化预选日期
+     */
+    private void initOrderDate(){
+        Calendar calendar = Calendar.getInstance();
+        //时间选择器
+        pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+        pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR)+2);
+        pvTime.setTime(new Date());
+        pvTime.setCyclic(false);
+        pvTime.setCancelable(true);
+        //时间选择后回调
+        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+
+            @Override
+            public void onTimeSelect(Date date) {
+//                tvOrderDate.setText(DateUtils.getTime(date));
+            }
+        });
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
