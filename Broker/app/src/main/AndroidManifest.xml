@@ -44,7 +44,7 @@
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:name=".customer.SearchActivity"
+            android:name=".customer.searchCustomer.SearchActivity"
             />
         <activity android:name=".customer.AddEditCustomerDetail.AddEditCustomerActivity"
             android:label="@string/activity_addcustomer"

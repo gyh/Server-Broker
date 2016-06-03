@@ -77,6 +77,11 @@ public class AddEditCustomerPresenter implements AddEditCustomerContract.Present
     }
 
     @Override
+    public void importPhone() {
+        mAddEditCustomerView.showDialogPhoneList();
+    }
+
+    @Override
     public void start() {
         if(mCustomerId!=null){
             populateCustomer();

@@ -75,7 +75,6 @@
         android:textSize="12sp"
         android:textColor="@color/app_body_text_color"
         android:layout_marginRight="16dp"
-        android:lines="1"
-        android:ellipsize="end"/>
+        />
 
 </RelativeLayout>

@@ -226,7 +226,20 @@ public class CustomerRepository implements CustomerDataSource {
 
             @Override
             public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
+                //如果请求失败
+                //从本地数据总获取数据
+                mCustomersLocalDataSource.getCustomers(new LoadCustomersCallback() {
+                    @Override
+                    public void onCustomersLoader(List<Customer> customerList) {
+                        refreshCache(customerList);
+                        callback.onCustomersLoader(new ArrayList<>(mCachedCustomers.values()));
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        callback.onDataNotAvailable();
+                    }
+                });
             }
         });
     }

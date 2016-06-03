@@ -13,185 +13,197 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/input_edit_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/add_hint_name"
-                    android:lines="1"/>
-
-            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/input_layout_phonenumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/input_edit_phonenumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:lines="1"
-                        android:hint="@string/add_hint_phonenumber" />
+                android:orientation="vertical"
+                android:background="@drawable/view_bg_fill_white_default">
 
-                </android.support.design.widget.TextInputLayout>
-                <Button
-                    android:id="@+id/btn_inset"
-                    style="@style/Mybutton_fill_small"
-                    android:layout_width="50dp"
-                    android:layout_height="30dp"
+                <EditText
+                    android:id="@+id/input_edit_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/app_white"
+                    android:hint="@string/add_hint_name"
+                    android:textSize="14sp"
+                    android:paddingLeft="16dp"
+                    android:singleLine="true"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/app_line_backgroud"
                     android:layout_marginLeft="16dp"
-                    android:text="导入"/>
+                    android:layout_marginRight="16dp"/>
+                <EditText
+                    android:id="@+id/input_edit_phonenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/app_white"
+                    android:hint="@string/add_hint_phonenumber"
+                    android:textSize="14sp"
+                    android:paddingLeft="16dp"
+                    android:singleLine="true"/>
+
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/view_housearea"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
+
+            <LinearLayout
                 android:layout_marginTop="8dp"
-                android:background="@color/app_white">
-                <TextView
-                    android:id="@+id/tv_str_housearea"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_select_houseArea"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="16dp"/>
-
-                <TextView
-                    android:id="@+id/tv_housearea"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/app_theme_color"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_str_housearea"
-                    android:layout_marginLeft="16dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 平米"
-                    android:textColor="@color/app_theme_color"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_housearea"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_action_next_item"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="16dp"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/view_desire"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/app_white">
-                <TextView
-                    android:id="@+id/tv_str_desire"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_select_houseArea"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="16dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/view_bg_fill_white_default">
+
+                <RelativeLayout
+                    android:background="@drawable/view_bg_fill_white"
+                    android:id="@+id/view_housearea"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+                    <TextView
+                        android:id="@+id/tv_str_housearea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_select_houseArea"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_housearea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tv_str_housearea"
+                        android:layout_marginLeft="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 平米"
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tv_housearea"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_action_next_item"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"/>
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/tv_desire"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/app_theme_color"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_str_desire"
-                    android:layout_marginLeft="16dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 个月以内"
-                    android:textColor="@color/app_theme_color"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_desire"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_action_next_item"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/app_line_backgroud"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"/>
-            </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/layout_orderdate"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/app_white">
-                <TextView
-                    android:id="@+id/tv_str_orderdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_select_orderdate"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="16dp"/>
+                <RelativeLayout
+                    android:id="@+id/view_desire"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/view_bg_fill_white">
+                    <TextView
+                        android:id="@+id/tv_str_desire"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_select_houseArea"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"/>
 
+                    <TextView
+                        android:id="@+id/tv_desire"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tv_str_desire"
+                        android:layout_marginLeft="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 个月以内"
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tv_desire"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_action_next_item"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"/>
+                </RelativeLayout>
                 <TextView
-                    android:id="@+id/tv_orderDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/app_theme_color"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_str_orderdate"
-                    android:layout_marginLeft="16dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/app_theme_color"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_orderDate"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_action_next_item"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/app_line_backgroud"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"/>
-            </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/layout_orderdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/view_bg_fill_white">
+                    <TextView
+                        android:id="@+id/tv_str_orderdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_select_orderdate"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_orderDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tv_str_orderdate"
+                        android:layout_marginLeft="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tv_orderDate"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_action_next_item"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
 
             <EditText
                 android:id="@+id/edit_describe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/app_white"
-                android:padding="8dp"
-                android:paddingLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/view_bg_fill_white_default"
+                android:padding="16dp"
+                android:textSize="14sp"
                 android:hint="请输入客户描述"
-                android:gravity="left"
-                android:minLines="5"/>
+                android:gravity="left"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

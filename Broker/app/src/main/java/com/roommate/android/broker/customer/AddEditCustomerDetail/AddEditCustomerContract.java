@@ -28,6 +28,7 @@ public interface AddEditCustomerContract {
 
         void setOrderDate(String inputDate);
 
+        void showDialogPhoneList();
     }
 
     interface Presenter extends BasePresenter{
@@ -37,5 +38,7 @@ public interface AddEditCustomerContract {
         void updateCustomer(String name, String phoneNumber,String desire,String houseArea,String describe,String inputDate);
 
         void populateCustomer();
+
+        void importPhone();
     }
 }

@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.ActivityUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
-import com.roommate.android.broker.customer.data.source.CustomerDataSource;
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
 import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
 import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
@@ -19,6 +20,8 @@ import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDat
  */
 public class AddEditCustomerActivity extends BaseActivity {
 
+
+    private AddEditCustomerPresenter presenter;
 
     public static void startAddCustomer(Fragment context, int requestCode){
         Intent intent = new Intent();
@@ -65,7 +68,7 @@ public class AddEditCustomerActivity extends BaseActivity {
         }
 
         // Create the presenter
-        new AddEditCustomerPresenter(CustomerRepository.getInstance(CustomerRemoteDataSource.getInstance(), CustomerLocalDataScource.getInstance(this)),
+        presenter = new AddEditCustomerPresenter(CustomerRepository.getInstance(CustomerRemoteDataSource.getInstance(), CustomerLocalDataScource.getInstance(this)),
                 customerId,
                 addEditCustomerFragment);
 
@@ -74,5 +77,23 @@ public class AddEditCustomerActivity extends BaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_add_customer;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_edit,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_insertphone:
+                presenter.importPhone();
+                break;
+        }
+        return true;
     }
 }

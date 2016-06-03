@@ -57,10 +57,8 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
     private TextView tvOrderDate;
     private TextView tvDesires;
     private TextView tvHouseArea;
-    private TextInputEditText editName;
-    private TextInputEditText editphoneNumber;
-    private TextInputLayout inputlayoutName;
-    private TextInputLayout inputlayoutPhoneNumber;
+    private EditText editName;
+    private EditText editphoneNumber;
     private EditText editDescribe;
 
 
@@ -123,17 +121,8 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
         tvOrderDate = (TextView) root.findViewById(R.id.tv_orderDate);
         tvDesires = (TextView)root.findViewById(R.id.tv_desire);
         tvHouseArea = (TextView)root.findViewById(R.id.tv_housearea);
-        editName = (TextInputEditText) root.findViewById(R.id.input_edit_name);
-        editphoneNumber = (TextInputEditText) root.findViewById(R.id.input_edit_phonenumber);
-        inputlayoutName = (TextInputLayout) root.findViewById(R.id.input_layout_name);
-        inputlayoutPhoneNumber = (TextInputLayout) root.findViewById(R.id.input_layout_phonenumber);
-
-        root.findViewById(R.id.btn_inset).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PhoneNumberUtils.alertPhoneType(getActivity(),editphoneNumber);
-            }
-        });
+        editName = (EditText) root.findViewById(R.id.input_edit_name);
+        editphoneNumber = (EditText) root.findViewById(R.id.input_edit_phonenumber);
 
         initDesireOption(root);
         initOrderDate(root);
@@ -212,6 +201,11 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
     }
 
     @Override
+    public void showDialogPhoneList() {
+        PhoneNumberUtils.alertPhoneType(getActivity(),editphoneNumber);
+    }
+
+    @Override
     public void setPresenter(@NonNull AddEditCustomerContract.Presenter presenter) {
         this.presenter = checkNotNull(presenter);
     }
@@ -226,8 +220,7 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
         boolean isOk = true;
         if(TextUtils.isEmpty(editName.getText().toString())){
             isOk = false;
-            inputlayoutName.setError("客户名称不能为空");
-            inputlayoutName.setErrorEnabled(true);
+            showToast("客户名称不能为空");
         }else if(TextUtils.isEmpty(editphoneNumber.getText().toString())){
             isOk = false;
             showToast("手机号不能为空");

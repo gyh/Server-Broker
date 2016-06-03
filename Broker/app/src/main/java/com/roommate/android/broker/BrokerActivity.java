@@ -9,20 +9,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.roommate.android.broker.common.ActivityUtils;
-import com.roommate.android.broker.common.DateUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
-import com.roommate.android.broker.customer.SearchActivity;
+import com.roommate.android.broker.customer.searchCustomer.SearchActivity;
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
 import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
 import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
 import com.roommate.android.broker.customer.list.CustomerListFragment;
 import com.roommate.android.broker.customer.list.CustomersPresenter;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
