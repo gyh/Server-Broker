@@ -5,8 +5,10 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.CallLog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -34,6 +36,16 @@ public class PhoneNumberUtils {
         return number;
     }
 
+    /**
+     * 拨打电话
+     *
+     * @param phoneNumber
+     */
+    public static void dial(String phoneNumber,Context context) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     /**
      * 判断手机号码是否输入正确

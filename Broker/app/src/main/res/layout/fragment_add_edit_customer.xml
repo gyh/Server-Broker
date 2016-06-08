@@ -35,15 +35,32 @@
                     android:background="@color/app_line_backgroud"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"/>
-                <EditText
-                    android:id="@+id/input_edit_phonenumber"
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginRight="6dp"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/app_white"
-                    android:hint="@string/add_hint_phonenumber"
-                    android:textSize="14sp"
-                    android:paddingLeft="16dp"
-                    android:singleLine="true"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/input_edit_phonenumber"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:background="@color/app_white"
+                        android:hint="@string/add_hint_phonenumber"
+                        android:textSize="14sp"
+                        android:paddingLeft="16dp"
+                        android:singleLine="true"/>
+
+                    <ImageButton
+                        android:id="@+id/img_input_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/ic_action_phone"
+                        android:scaleType="fitXY"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 

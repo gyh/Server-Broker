@@ -23,13 +23,24 @@ public class AddEditCustomerActivity extends BaseActivity {
 
     private AddEditCustomerPresenter presenter;
 
+    /**
+     * 打开添加
+     * @param context
+     * @param requestCode
+     */
     public static void startAddCustomer(Fragment context, int requestCode){
         Intent intent = new Intent();
         intent.setClass(context.getActivity(),AddEditCustomerActivity.class);
         context.startActivityForResult(intent,requestCode);
     }
 
-    public static void startForResult(Fragment context, int requestCode, String customerId){
+    /**
+     * 打开编辑并且返回
+     * @param context
+     * @param requestCode
+     * @param customerId
+     */
+    public static void startEditForResult(Fragment context, int requestCode, String customerId){
         Intent intent = new Intent();
         intent.setClass(context.getActivity(),AddEditCustomerActivity.class);
         intent.putExtra(AddEditCustomerFragment.ARGUMENT_EDIT_CUSTOMER_ID,customerId);
@@ -79,21 +90,4 @@ public class AddEditCustomerActivity extends BaseActivity {
         return R.layout.activity_add_customer;
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_edit,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_insertphone:
-                presenter.importPhone();
-                break;
-        }
-        return true;
-    }
 }

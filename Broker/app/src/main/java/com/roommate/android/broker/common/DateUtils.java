@@ -17,4 +17,14 @@ public class DateUtils {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return format.format(date);
     }
+
+    /**
+     * 获取时间数据
+     * @param date
+     * @return
+     */
+    public static String getDate(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
 }

@@ -38,7 +38,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CustomerRepository implements CustomerDataSource {
 
-    private static CustomerRepository INSTANCE = null;
+    private volatile static  CustomerRepository INSTANCE = null;
 
     private final CustomerDataSource mCustomersRemoteDataSource;
 
@@ -69,10 +69,13 @@ public class CustomerRepository implements CustomerDataSource {
      * @param customersLocalDataSource  the device storage data source
      * @return the {@link CustomerDataSource} instance
      */
-    public static CustomerRepository getInstance(CustomerDataSource customersRemoteDataSource,
+    public synchronized static CustomerRepository getInstance(CustomerDataSource customersRemoteDataSource,
                                                  CustomerDataSource customersLocalDataSource) {
         if (INSTANCE == null) {
-            INSTANCE = new CustomerRepository(customersRemoteDataSource, customersLocalDataSource);
+            synchronized (CustomerRepository.class) {
+                if(INSTANCE==null)
+                    INSTANCE = new CustomerRepository(customersRemoteDataSource, customersLocalDataSource);
+            }
         }
         return INSTANCE;
     }
@@ -209,6 +212,21 @@ public class CustomerRepository implements CustomerDataSource {
         mCustomersRemoteDataSource.deleteCustomer(checkNotNull(customerId));
         mCustomersLocalDataSource.deleteCustomer(checkNotNull(customerId));
         mCachedCustomers.remove(customerId);
+    }
+
+    @Override
+    public void searchPhoneNumber(@NonNull String phoneNumber,@NonNull LoadCustomersCallback callback) {
+        mCustomersLocalDataSource.searchPhoneNumber(phoneNumber,callback);
+    }
+
+    @Override
+    public void searchName(@NonNull String name,@NonNull LoadCustomersCallback callback) {
+        mCustomersLocalDataSource.searchName(name,callback);
+    }
+
+    @Override
+    public void searchInputDate(@NonNull String dateStr, @NonNull LoadCustomersCallback callback) {
+        mCustomersLocalDataSource.searchInputDate(dateStr,callback);
     }
 
     /**

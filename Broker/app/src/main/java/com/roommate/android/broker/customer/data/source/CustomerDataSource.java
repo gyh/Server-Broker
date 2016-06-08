@@ -40,4 +40,10 @@ public interface CustomerDataSource {
     void deleteAllCustomers();
 
     void deleteCustomer(@NonNull String customerId);
+
+    void searchPhoneNumber(@NonNull String phoneNumbe,@NonNull LoadCustomersCallback callback);
+
+    void searchName(@NonNull String name,@NonNull LoadCustomersCallback callback);
+
+    void searchInputDate(@NonNull String dateStr,@NonNull LoadCustomersCallback callback);
 }

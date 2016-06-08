@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,7 +23,6 @@ import com.roommate.android.broker.common.PhoneNumberUtils;
 import com.roommate.android.broker.common.StringUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -114,7 +111,7 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.add_edit_customer, container, false);
+        View root = inflater.inflate(R.layout.fragment_add_edit_customer, container, false);
 
         //初始化View
         editDescribe = (EditText)root.findViewById(R.id.edit_describe);
@@ -123,6 +120,13 @@ public class AddEditCustomerFragment extends Fragment implements AddEditCustomer
         tvHouseArea = (TextView)root.findViewById(R.id.tv_housearea);
         editName = (EditText) root.findViewById(R.id.input_edit_name);
         editphoneNumber = (EditText) root.findViewById(R.id.input_edit_phonenumber);
+
+        root.findViewById(R.id.img_input_phone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.importPhone();
+            }
+        });
 
         initDesireOption(root);
         initOrderDate(root);

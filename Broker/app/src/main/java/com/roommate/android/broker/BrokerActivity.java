@@ -12,8 +12,9 @@ import android.view.MenuItem;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.roommate.android.broker.common.ActivityUtils;
+import com.roommate.android.broker.common.DateUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
-import com.roommate.android.broker.customer.searchCustomer.SearchActivity;
+import com.roommate.android.broker.customer.searchCustomer.SearchCustomerActivity;
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
 import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
 import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
@@ -102,7 +103,7 @@ public class BrokerActivity extends BaseActivity{
                 pvTime.show();
                 break;
             case R.id.action_search:
-                startActivity(new Intent(BrokerActivity.this, SearchActivity.class));
+                startActivity(new Intent(BrokerActivity.this, SearchCustomerActivity.class));
                 break;
             case R.id.action_sync:
                 mCustomersPresenter.synchronization();
@@ -135,7 +136,7 @@ public class BrokerActivity extends BaseActivity{
 
             @Override
             public void onTimeSelect(Date date) {
-//                tvOrderDate.setText(DateUtils.getTime(date));
+                mCustomersPresenter.fitterDate(DateUtils.getDate(date));
             }
         });
     }

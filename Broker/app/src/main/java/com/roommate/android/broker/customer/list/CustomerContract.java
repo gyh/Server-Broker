@@ -52,6 +52,8 @@ public interface CustomerContract {
 
         void showEditCustomer(String customerId);
 
+        void showFitterCustomers(String fitterDate);
+
     }
 
     interface Presenter extends BasePresenter {
@@ -71,5 +73,7 @@ public interface CustomerContract {
         void delCustomer(String customerId);
 
         void refershData();
+
+        void fitterDate(String dateStr);
     }
 }

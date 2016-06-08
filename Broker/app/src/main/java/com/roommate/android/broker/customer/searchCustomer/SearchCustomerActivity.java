@@ -1,23 +1,24 @@
 package com.roommate.android.broker.customer.searchCustomer;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.roommate.android.broker.R;
+import com.roommate.android.broker.common.ActivityUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
+import com.roommate.android.broker.customer.data.source.CustomerRepository;
+import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
+import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
 
 /**
  * Created by GYH on 2016/5/18.
  */
-public class SearchActivity extends BaseActivity {
+public class SearchCustomerActivity extends BaseActivity {
+
+    private SearchCustomerContract.Presenter mPresenter;
 
     private EditText mEtSearchText;
 
@@ -28,7 +29,7 @@ public class SearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mInputManger= (InputMethodManager) getSystemService(SearchActivity.INPUT_METHOD_SERVICE);
+        mInputManger= (InputMethodManager) getSystemService(SearchCustomerActivity.INPUT_METHOD_SERVICE);
 
         mEtSearchText = (EditText)findViewById(R.id.edit_customer);
 
@@ -56,6 +57,18 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
+        SearchCustomerFragment searchCustomerFragment =
+                (SearchCustomerFragment)getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if(searchCustomerFragment == null){
+            searchCustomerFragment = SearchCustomerFragment.newInstance();
+
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    searchCustomerFragment, R.id.contentFrame);
+        }
+
+        mPresenter = new SearchCustomerPresenter(CustomerRepository.getInstance(CustomerRemoteDataSource.getInstance(), CustomerLocalDataScource.getInstance(this)),
+                searchCustomerFragment );
+
 
     }
 
@@ -69,6 +82,6 @@ public class SearchActivity extends BaseActivity {
      * @param searchStr
      */
     private void doSearch(String searchStr){
-
+        mPresenter.searchCustomer(searchStr);
     }
 }

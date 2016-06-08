@@ -20,7 +20,6 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Toolbar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-            <include layout="@layout/search_toolbar"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

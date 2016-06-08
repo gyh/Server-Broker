@@ -44,7 +44,7 @@
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:name=".customer.searchCustomer.SearchActivity"
+            android:name=".customer.searchCustomer.SearchCustomerActivity"
             />
         <activity android:name=".customer.AddEditCustomerDetail.AddEditCustomerActivity"
             android:label="@string/activity_addcustomer"
@@ -58,6 +58,9 @@
         <activity android:name=".AboutActivity"
             android:screenOrientation="portrait"
             android:label="@string/activity_about"/>
+        <activity android:name=".customer.fitter.FitterCustomersActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/activity_fitterdate"/>
     </application>
 
 </manifest>

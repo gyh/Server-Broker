@@ -208,4 +208,19 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
         RemoteOpData remoteOpData = new RemoteOpData(mId,"1","3",customerId);
         REMOTE_OP_DATA_MAP.put(remoteOpData.getMid(),remoteOpData);
     }
+
+    @Override
+    public void searchPhoneNumber(@NonNull String phoneNumber,@NonNull LoadCustomersCallback callback) {
+
+    }
+
+    @Override
+    public void searchName(@NonNull String name,@NonNull LoadCustomersCallback callback) {
+
+    }
+
+    @Override
+    public void searchInputDate(@NonNull String dateStr, @NonNull LoadCustomersCallback callback) {
+
+    }
 }

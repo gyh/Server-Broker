@@ -200,4 +200,151 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         db.close();
     }
+
+    @Override
+    public void searchPhoneNumber(@NonNull String phoneNumber,@NonNull LoadCustomersCallback callback) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
+                CustomerEntry.COLUMN_NAME_CUSTOMER_NAME,
+                CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER,
+                CustomerEntry.COLUMN_NAME_DESIRE,
+                CustomerEntry.COLUMN_NAME_HOUSE_AREA,
+                CustomerEntry.COLUMN_NAME_DESCRIBE,
+                CustomerEntry.COLUMN_NAME_INPUTDATE
+        };
+
+        String selection = CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER + " LIKE ?";
+        String[] selectionArgs = { "%"+phoneNumber +"%"};
+
+        Cursor c = db.query(
+                CustomerEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        List<Customer> customers = new ArrayList<>();
+
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()){
+                String itemId = c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_ID));
+                String name =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_NAME));
+                String phoneNumbera =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER));
+                String desire =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESIRE));
+                String houseArea =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_HOUSE_AREA));
+                String describe =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESCRIBE));
+                String inputDate =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_INPUTDATE));
+                Customer customer = new Customer(itemId, name, phoneNumbera, desire,houseArea,describe,inputDate);
+                customers.add(customer);
+            }
+        }
+        if (c != null) {
+            c.close();
+        }
+
+        db.close();
+
+        if (customers.isEmpty()) {
+            // This will be called if the table is new or just empty.
+            callback.onDataNotAvailable();
+        } else {
+            callback.onCustomersLoader(customers);
+        }
+    }
+
+    @Override
+    public void searchName(@NonNull String name,@NonNull LoadCustomersCallback callback) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
+                CustomerEntry.COLUMN_NAME_CUSTOMER_NAME,
+                CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER,
+                CustomerEntry.COLUMN_NAME_DESIRE,
+                CustomerEntry.COLUMN_NAME_HOUSE_AREA,
+                CustomerEntry.COLUMN_NAME_DESCRIBE,
+                CustomerEntry.COLUMN_NAME_INPUTDATE
+        };
+
+        String selection = CustomerEntry.COLUMN_NAME_CUSTOMER_NAME + " LIKE ?";
+        String[] selectionArgs = {"%"+ name +"%" };
+
+        Cursor c = db.query(
+                CustomerEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        List<Customer> customers = new ArrayList<>();
+
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()){
+                String itemId = c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_ID));
+                String namea =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_NAME));
+                String phoneNumbera =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER));
+                String desire =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESIRE));
+                String houseArea =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_HOUSE_AREA));
+                String describe =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESCRIBE));
+                String inputDate =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_INPUTDATE));
+                Customer customer = new Customer(itemId, namea, phoneNumbera, desire,houseArea,describe,inputDate);
+                customers.add(customer);
+            }
+        }
+        if (c != null) {
+            c.close();
+        }
+
+        db.close();
+
+        if (customers.isEmpty()) {
+            // This will be called if the table is new or just empty.
+            callback.onDataNotAvailable();
+        } else {
+            callback.onCustomersLoader(customers);
+        }
+    }
+
+    @Override
+    public void searchInputDate(@NonNull String dateStr, @NonNull LoadCustomersCallback callback) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
+                CustomerEntry.COLUMN_NAME_CUSTOMER_NAME,
+                CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER,
+                CustomerEntry.COLUMN_NAME_DESIRE,
+                CustomerEntry.COLUMN_NAME_HOUSE_AREA,
+                CustomerEntry.COLUMN_NAME_DESCRIBE,
+                CustomerEntry.COLUMN_NAME_INPUTDATE
+        };
+
+        String selection = CustomerEntry.COLUMN_NAME_INPUTDATE + " LIKE ?";
+        String[] selectionArgs = {"%"+ dateStr +"%" };
+
+        Cursor c = db.query(
+                CustomerEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        List<Customer> customers = new ArrayList<>();
+
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()){
+                String itemId = c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_ID));
+                String namea =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_NAME));
+                String phoneNumbera =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER));
+                String desire =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESIRE));
+                String houseArea =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_HOUSE_AREA));
+                String describe =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESCRIBE));
+                String inputDate =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_INPUTDATE));
+                Customer customer = new Customer(itemId, namea, phoneNumbera, desire,houseArea,describe,inputDate);
+                customers.add(customer);
+            }
+        }
+        if (c != null) {
+            c.close();
+        }
+
+        db.close();
+
+        if (customers.isEmpty()) {
+            // This will be called if the table is new or just empty.
+            callback.onDataNotAvailable();
+        } else {
+            callback.onCustomersLoader(customers);
+        }
+    }
 }

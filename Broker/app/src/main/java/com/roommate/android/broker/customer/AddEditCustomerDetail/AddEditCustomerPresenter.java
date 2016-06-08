@@ -62,7 +62,7 @@ public class AddEditCustomerPresenter implements AddEditCustomerContract.Present
         if(customer.isEmpty()){
             mAddEditCustomerView.showEmptyCustomerError();
         }else {
-            mCustomerRepository.saveCustomer(customer);
+            mCustomerRepository.updataCustomer(customer);
             mAddEditCustomerView.showCustomersList();
         }
     }

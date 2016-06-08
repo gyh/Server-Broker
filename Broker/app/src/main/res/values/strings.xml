@@ -31,6 +31,7 @@
     <string name="activity_addcustomer">添加客户</string>
     <string name="activity_editcustomer">编辑客户</string>
     <string name="activity_about">关于我们</string>
+    <string name="activity_fitterdate">日期筛选</string>
 
     <string name="menu_sync">同步</string>
     <string name="menu_search">搜索</string>

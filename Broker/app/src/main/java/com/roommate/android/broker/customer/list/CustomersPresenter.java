@@ -102,6 +102,11 @@ public class CustomersPresenter implements CustomerContract.Presenter {
     }
 
     @Override
+    public void fitterDate(String dateStr) {
+        mCustomersView.showFitterCustomers(dateStr);
+    }
+
+    @Override
     public void editCustomer(String customerId) {
         mCustomersView.showEditCustomer(customerId);
     }
