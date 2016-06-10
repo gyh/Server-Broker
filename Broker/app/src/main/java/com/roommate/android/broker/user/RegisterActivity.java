@@ -1,5 +1,7 @@
 package com.roommate.android.broker.user;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -11,6 +13,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.google.gson.Gson;
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.ApiContant;
+import com.roommate.android.broker.common.JsonUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
 
 import org.xutils.common.Callback;
@@ -27,6 +30,12 @@ import java.util.Map;
  */
 public class RegisterActivity extends BaseActivity {
 
+
+    public static void startResultRegister(Activity activity,int requestCode){
+        Intent intent  = new Intent();
+        intent.setClass(activity,RegisterActivity.class);
+        activity.startActivityForResult(intent,requestCode);
+    }
 
     private EditText eduserName;
     private EditText edpassword;
@@ -84,25 +93,37 @@ public class RegisterActivity extends BaseActivity {
         RequestParams params = new RequestParams(ApiContant.REGISTER_URL);
 
         Map<String,String> stringMap =new HashMap<>();
-        stringMap.put("useranme",eduserName.getText().toString());
-        stringMap.put("password",edpassword.getText().toString());
+        stringMap.put("mobile",eduserName.getText().toString());
+        stringMap.put("passwd",edpassword.getText().toString());
         String gson =  new Gson().toJson(stringMap);
         params.addBodyParameter("Data",gson);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(final String result) {
                 LogUtil.d(result);
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        svProgressHUD.showSuccessWithStatus("注册成功");
-                    }
-                });
+                if(JsonUtils.isResultSuccess(result)){
+                    UserInfoCase.saveUserInfo(JsonUtils.getData(result));
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            svProgressHUD.showSuccessWithStatus("注册成功");
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    });
+                }else {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            svProgressHUD.showErrorWithStatus(JsonUtils.resultMsg(result));
+                        }
+                    });
+                }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                svProgressHUD.showSuccessWithStatus("哎呀，网络异常");
+                svProgressHUD.showErrorWithStatus("哎呀，网络异常");
             }
 
             @Override

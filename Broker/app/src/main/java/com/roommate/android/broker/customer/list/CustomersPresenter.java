@@ -93,12 +93,33 @@ public class CustomersPresenter implements CustomerContract.Presenter {
 
     @Override
     public void synchronization() {
-        loadCustomers(true);
+        mCustomerRepository.synCustomer(new CustomerDataSource.SynCustomerCallback() {
+            @Override
+            public void onSynSuccess() {
+                mCustomersView.showSynSuccess();
+            }
+
+            @Override
+            public void onSynError() {
+                mCustomersView.showLoadingCustomersError();
+            }
+        });
     }
 
     @Override
     public void refershData() {
-        loadCustomers(false,false);
+        mCustomerRepository.synCustomer(new CustomerDataSource.SynCustomerCallback() {
+            @Override
+            public void onSynSuccess() {
+                loadCustomers(true);
+            }
+
+            @Override
+            public void onSynError() {
+                mCustomersView.showLoadingCustomersError();
+            }
+        });
+
     }
 
     @Override

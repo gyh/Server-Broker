@@ -89,6 +89,12 @@ public class CustomerRepository implements CustomerDataSource {
     }
 
     @Override
+    public void synCustomer(@NonNull SynCustomerCallback callback) {
+        checkNotNull(callback);
+        mCustomersRemoteDataSource.synCustomer(callback);
+    }
+
+    @Override
     public void getCustomers(@NonNull final LoadCustomersCallback callback) {
         checkNotNull(callback);
 

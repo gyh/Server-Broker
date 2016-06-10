@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.roommate.android.broker.R;
+import com.roommate.android.broker.common.DateUtils;
 import com.roommate.android.broker.common.DialogUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
 import com.roommate.android.broker.common.view.SmoothListView.SmoothListView;
@@ -69,7 +70,7 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
         View view = inflater.inflate(R.layout.fragment_customerlist, null);
 
         smoothListView = (SmoothListView) view.findViewById(R.id.listview);
-        smoothListView.setRefreshEnable(false);
+        smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
 
         smoothListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -89,6 +90,25 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
                     }
                 });
                 return true;
+            }
+        });
+
+        smoothListView.setSmoothListViewListener(new SmoothListView.ISmoothListViewListener() {
+            @Override
+            public void onRefresh() {
+                smoothListView.setRefreshTime(DateUtils.getNewDate());
+                smoothListView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        smoothListView.stopRefresh();
+                    }
+                }, 1000);
+                mPresenter.refershData();
+            }
+
+            @Override
+            public void onLoadMore() {
+
             }
         });
 
@@ -184,6 +204,16 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
             @Override
             public void run() {
                 ((BaseActivity) getActivity()).svProgressHUD.showErrorWithStatus("哎呀，失败", SVProgressHUD.SVProgressHUDMaskType.Clear);
+            }
+        });
+    }
+
+    @Override
+    public void showSynSuccess() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                ((BaseActivity) getActivity()).svProgressHUD.showSuccessWithStatus("同步成功", SVProgressHUD.SVProgressHUDMaskType.Clear);
             }
         });
     }

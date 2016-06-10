@@ -5,32 +5,42 @@ package com.roommate.android.broker.customer.data.source.remote;
  */
 public class RemoteOpData {
 
-    private final String mid;
-    private final String opdatatype;
-    private final String optype;
-    private final String opdetails;
+    public static final String CUSTOMERDATA = "2";
+
+    public static final String ADDOPT = "1";
+    public static final String DELOPT = "2";
+    public static final String UPDOPT = "3";
+
+    //用户id
+    private final String userId;
+    //操作对象  1 客户
+    private final String optObject;
+    //操作类型  1 增加  2 删除 3 修改
+    private final String optType;
+    //数据
+    private final String optData;
 
 
-    public RemoteOpData(String mid, String opdatatype, String optype, String opdetails) {
-        this.mid = mid;
-        this.opdatatype = opdatatype;
-        this.optype = optype;
-        this.opdetails = opdetails;
+    public RemoteOpData(String userId, String optObject, String optType, String optData) {
+        this.userId = userId;
+        this.optObject = optObject;
+        this.optType = optType;
+        this.optData = optData;
     }
 
-    public String getMid() {
-        return mid;
+    public String getOptData() {
+        return optData;
     }
 
-    public String getOpdatatype() {
-        return opdatatype;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getOptype() {
-        return optype;
+    public String getOptObject() {
+        return optObject;
     }
 
-    public String getOpdetails() {
-        return opdetails;
+    public String getOptType() {
+        return optType;
     }
 }

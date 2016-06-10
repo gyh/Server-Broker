@@ -8,6 +8,7 @@ import android.os.Vibrator;
 import com.roommate.android.broker.common.PreferencesUtil;
 
 import org.xutils.BuildConfig;
+import org.xutils.HttpManager;
 import org.xutils.x;
 
 

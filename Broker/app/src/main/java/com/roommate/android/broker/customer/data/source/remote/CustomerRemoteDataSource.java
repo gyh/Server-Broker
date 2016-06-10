@@ -1,19 +1,17 @@
 package com.roommate.android.broker.customer.data.source.remote;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
-import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.roommate.android.broker.common.ImagePathUtils;
+import com.roommate.android.broker.common.ApiContant;
+import com.roommate.android.broker.common.JsonUtils;
+import com.roommate.android.broker.user.UserInfoCase;
 import com.roommate.android.broker.customer.data.Customer;
 import com.roommate.android.broker.customer.data.source.CustomerDataSource;
-import com.roommate.android.broker.customer.data.source.local.CustomersPersistenceContract;
-import com.roommate.android.broker.house.data.House;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.LogUtil;
@@ -21,9 +19,8 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -39,10 +36,10 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
     private static CustomerRemoteDataSource INSTANCE;
 
-    private final static Map<String, RemoteOpData> REMOTE_OP_DATA_MAP;
+    private final static List<RemoteOpData> REMOTE_OP_DATA_MAP;
 
     static {
-        REMOTE_OP_DATA_MAP = new LinkedHashMap<>();
+        REMOTE_OP_DATA_MAP = new LinkedList<>();
     }
 
     // Prevent direct instantiation.
@@ -57,31 +54,60 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
 
     @Override
-    public void getCustomers(@NonNull final LoadCustomersCallback callback) {
+    public void synCustomer(@NonNull final SynCustomerCallback callback) {
+        // TODO: 2016/6/1操作数据
 
-        // TODO: 2016/6/3  接口开发
-        if(true){
-            callback.onDataNotAvailable();
-            return;
-        }
+        RequestParams params = new RequestParams(ApiContant.CUSTOMER_SYNDATA_URL);
 
-        // TODO: 2016/6/1 传入操作数据
+        String gson =  new Gson().toJson(REMOTE_OP_DATA_MAP);
 
-        RequestParams requestParams = new RequestParams("http://search.tootoo.cn/searchMB/goods");
-        requestParams.addQueryStringParameter("channelType","2");
-        requestParams.addQueryStringParameter("scope","11202");
-        requestParams.addQueryStringParameter("geoId","1,2,3,0");
-        requestParams.addQueryStringParameter("yz","39d16330300072bce2e7dab87a5d85f0");
-        requestParams.addQueryStringParameter("key","水果");
-        LogUtil.d("  ----Input---   " + requestParams.toString());
-        x.http().get(requestParams, new Callback.CommonCallback<String>() {
+        params.addBodyParameter(ApiContant.DATA,gson);
+
+        x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(final String result) {
-
                 LogUtil.d("  ----output---   " + result);
+                if(JsonUtils.isResultSuccess(result)){
+                    REMOTE_OP_DATA_MAP.clear();
+                    callback.onSynSuccess();
+                }else {
+                    callback.onSynError();
+                }
+            }
 
-                REMOTE_OP_DATA_MAP.clear();
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                callback.onSynError();
+            }
 
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    @Override
+    public void getCustomers(@NonNull final LoadCustomersCallback callback) {
+
+        // TODO: 2016/6/1 获取数据
+
+        RequestParams params = new RequestParams(ApiContant.CUSTOMER_GETDATA_URL);
+
+        RemoteOpData remoteOpData  = new RemoteOpData(UserInfoCase.getUserId(),"","","");
+
+        String gson =  new Gson().toJson(remoteOpData);
+
+        params.addBodyParameter(ApiContant.DATA,gson);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(final String result) {
+                LogUtil.d("  ----output---   " + result);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -125,7 +151,6 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
             }
         });
-
     }
 
     @Override
@@ -175,19 +200,15 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
     @Override
     public void saveCustomer(@NonNull Customer customer) {
         checkNotNull(customer);
-        //// TODO: 2016/6/1   录入提交服务端操作记录 操作id 操作数据类型 操作类型  操作数据
-        String mId = System.currentTimeMillis()+"";
-        RemoteOpData remoteOpData = new RemoteOpData(mId,"1","1",customer.toString());
-        REMOTE_OP_DATA_MAP.put(remoteOpData.getMid(),remoteOpData);
+        RemoteOpData remoteOpData = new RemoteOpData(UserInfoCase.getUserId(),RemoteOpData.CUSTOMERDATA,RemoteOpData.ADDOPT,customer.toString());
+        REMOTE_OP_DATA_MAP.add(remoteOpData);
     }
 
     @Override
     public void updataCustomer(@NonNull Customer customer) {
         checkNotNull(customer);
-        //// TODO: 2016/6/1   录入提交服务端操作记录 操作id 操作数据类型 操作类型  操作数据
-        String mId = System.currentTimeMillis()+"";
-        RemoteOpData remoteOpData = new RemoteOpData(mId,"1","2",customer.toString());
-        REMOTE_OP_DATA_MAP.put(remoteOpData.getMid(),remoteOpData);
+        RemoteOpData remoteOpData = new RemoteOpData(UserInfoCase.getUserId(),RemoteOpData.CUSTOMERDATA,RemoteOpData.UPDOPT,customer.toString());
+        REMOTE_OP_DATA_MAP.add(remoteOpData);
     }
 
     @Override
@@ -203,10 +224,8 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
     @Override
     public void deleteCustomer(@NonNull String customerId) {
         checkNotNull(customerId);
-        //// TODO: 2016/6/1   录入提交服务端操作记录 操作id 操作数据类型 操作类型  操作数据
-        String mId = System.currentTimeMillis()+"";
-        RemoteOpData remoteOpData = new RemoteOpData(mId,"1","3",customerId);
-        REMOTE_OP_DATA_MAP.put(remoteOpData.getMid(),remoteOpData);
+        RemoteOpData remoteOpData = new RemoteOpData(UserInfoCase.getUserId(),RemoteOpData.CUSTOMERDATA,RemoteOpData.DELOPT,customerId);
+        REMOTE_OP_DATA_MAP.add(remoteOpData);
     }
 
     @Override

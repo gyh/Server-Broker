@@ -27,6 +27,15 @@ public interface CustomerDataSource {
 
     }
 
+    interface SynCustomerCallback{
+
+        void onSynSuccess();
+
+        void onSynError();
+    }
+
+    void synCustomer(@NonNull SynCustomerCallback callback);
+
     void getCustomers(@NonNull LoadCustomersCallback callback);
 
     void getCustomer(@NonNull String customerId, @NonNull GetCustomerCallback callback);

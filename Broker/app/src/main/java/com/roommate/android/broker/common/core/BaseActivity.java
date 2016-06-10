@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ViewUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +13,8 @@ import android.widget.LinearLayout;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.roommate.android.broker.R;
-import com.roommate.android.broker.common.LoginUtils;
+import com.roommate.android.broker.user.UserInfoCase;
 import com.roommate.android.broker.user.LoginActivity;
-
-import org.xutils.x;
 
 import java.lang.ref.WeakReference;
 
@@ -60,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity{
 
 
         //判断是否需求登录
-        if(needLogin()&&!LoginUtils.isLogin()){
+        if(needLogin()&&!UserInfoCase.isLogin()){
             Intent intent = new Intent();
             intent.setClass(this, LoginActivity.class);
             startActivityForResult(intent,LOGIN_REQUEST);

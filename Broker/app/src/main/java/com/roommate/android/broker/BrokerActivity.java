@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.roommate.android.broker.common.ActivityUtils;
@@ -20,6 +21,7 @@ import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataS
 import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
 import com.roommate.android.broker.customer.list.CustomerListFragment;
 import com.roommate.android.broker.customer.list.CustomersPresenter;
+import com.roommate.android.broker.user.UserInfoCase;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,6 +39,8 @@ public class BrokerActivity extends BaseActivity{
 
     private DrawerLayout mDrawerLayout;
 
+    private TextView tvUserName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,8 @@ public class BrokerActivity extends BaseActivity{
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
+
+        tvUserName = (TextView) findViewById(R.id.tv_userName);
 
         //初始化时间选择
         initOrderDate();
@@ -78,6 +84,12 @@ public class BrokerActivity extends BaseActivity{
     @Override
     public int getLayoutId() {
         return R.layout.activity_broker;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        tvUserName.setText(UserInfoCase.getUserId());
     }
 
     @Override

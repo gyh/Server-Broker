@@ -27,4 +27,14 @@ public class DateUtils {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
     }
+
+
+    /**
+     * 获取当前时间
+     * @return
+     */
+    public static String getNewDate(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return format.format(new Date());
+    }
 }

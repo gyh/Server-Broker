@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 /**
@@ -77,7 +79,7 @@ public class ApplicationHelper {
             clientAgent.product_name = Build.PRODUCT;
             clientAgent.sdk_version = Build.VERSION.SDK_INT;
             clientAgent.manufacturer = Build.MANUFACTURER;
-            strUserAgent = GsonUtils.toJson(clientAgent);
+            strUserAgent = new Gson().toJson(clientAgent);
         }
         return strUserAgent;
     }

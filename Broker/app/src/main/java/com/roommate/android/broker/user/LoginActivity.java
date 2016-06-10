@@ -6,28 +6,19 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.bigkoo.svprogresshud.SVProgressHUD;
-import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.ApiContant;
-import com.roommate.android.broker.common.LoginUtils;
+import com.roommate.android.broker.common.JsonUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
 
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 import org.xutils.common.Callback;
 import org.xutils.common.util.LogUtil;
 import org.xutils.http.RequestParams;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,12 +49,12 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ApiContant.isDebug){
-                    LoginUtils.loginss = true;
-                    setResult(RESULT_OK);
-                    finish();
-                    return;
-                }
+//                if(ApiContant.isDebug){
+//                    UserInfoCase.loginss = true;
+//                    setResult(RESULT_OK);
+//                    finish();
+//                    return;
+//                }
                 if(checkVaule()){
                     loginService();
                 }
@@ -73,9 +64,7 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.go_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent();
-                intent.setClass(LoginActivity.this,RegisterActivity.class);
-                startActivityForResult(intent,REGISTER_REQUEST);
+                RegisterActivity.startResultRegister(LoginActivity.this,REGISTER_REQUEST);
             }
         });
     }
@@ -98,28 +87,39 @@ public class LoginActivity extends BaseActivity {
         RequestParams params = new RequestParams(ApiContant.LOGIN_URL);
 
         Map<String,String> stringMap =new HashMap<>();
-        stringMap.put("useranme",userName.getText().toString());
-        stringMap.put("password",password.getText().toString());
+        stringMap.put("mobile",userName.getText().toString());
+        stringMap.put("passwd",password.getText().toString());
         String gson =  new Gson().toJson(stringMap);
 
         params.addBodyParameter("Data",gson);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(final String result) {
                 LogUtil.d(result);
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        svProgressHUD.showSuccessWithStatus("登录成功");
-                        setResult(RESULT_OK);
-                        finish();
-                    }
-                });
+
+                if(JsonUtils.isResultSuccess(result)){
+                    UserInfoCase.saveUserInfo(JsonUtils.getData(result));
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            svProgressHUD.showSuccessWithStatus("登录成功");
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    });
+                }else {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            svProgressHUD.showErrorWithStatus(JsonUtils.resultMsg(result));
+                        }
+                    });
+                }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                svProgressHUD.showSuccessWithStatus("哎呀，网络异常");
+                svProgressHUD.showErrorWithStatus("哎呀，网络异常");
             }
 
             @Override

@@ -46,6 +46,11 @@ public class CustomerLocalDataScource implements CustomerDataSource{
     }
 
     @Override
+    public void synCustomer(@NonNull SynCustomerCallback callback) {
+
+    }
+
+    @Override
     public void getCustomers(@NonNull LoadCustomersCallback callback) {
         List<Customer> customers = new ArrayList<Customer>();
         SQLiteDatabase db = mDbHelper.getReadableDatabase();

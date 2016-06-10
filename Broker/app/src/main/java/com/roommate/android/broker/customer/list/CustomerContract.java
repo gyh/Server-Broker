@@ -42,6 +42,8 @@ public interface CustomerContract {
 
         void showLoadingCustomersError();
 
+        void showSynSuccess();
+
         void showNoCustomers();
 
         void showSuccessfullyDeletedMessage();

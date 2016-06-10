@@ -7,19 +7,25 @@ public class ApiContant {
 
     public static boolean isDebug = true;
 
-    public static final String BASE_URL = "http://192.168.1.109:8080";
+    public static final String BASE_URL = "http://192.168.1.110:8080";
 
 
-    public static final String REQ_STR = "squer";
+    public static final String DATA = "Data";
 
-    public static String LOGIN_URL="/user/addUser";
+    public static String LOGIN_URL="/user/login";
 
-    public static String REGISTER_URL = "";
+    public static String REGISTER_URL = "/user/register";
+
+    public static String CUSTOMER_SYNDATA_URL="/cutomer/synDada";
+
+    public static String CUSTOMER_GETDATA_URL="/cutomer/getData";
 
     static {
         if(isDebug){
             LOGIN_URL=BASE_URL+LOGIN_URL;
             REGISTER_URL = BASE_URL+REGISTER_URL;
+        }else {
+
         }
     }
 
