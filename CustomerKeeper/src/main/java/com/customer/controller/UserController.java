@@ -43,33 +43,66 @@ public class UserController {
         //   User u = (User) JSONObject.parse(users);
        String str =  URLDecoder.decode(users).replace("Data=", "");
         User u =  JSON.parseObject(str, User.class);
+        
+     //  User u = (User) JSONUtils.parse(users);
      // User u = (User) JSONUtils.parse(str);
         
-        System.out.println(u.getUsername() + "&&&&&&&&&&&&&&&" + u.getPassword());
-
-    /* for(User u : users){
-    	 System.out.println(u.getUserNmae());
-     }*/
-//        JsonResult result = new JsonResult();
-        User user = new User();
-        user.setUsername("zhangsan");
-        user.setPassword("123456");
-        /*int i = userService.add(user);
-        if(i!=1){
-            return new JsonResult(0,"",user,"");
-        }*/
-        return new JsonResult(1,"",user,"");
+  
+        return new JsonResult(1,"",u,"");
        // return null;
     }
 
 
     @RequestMapping(value="/updateUser")
     @ResponseBody
-    public JsonResult updateUser(HttpServletRequest request, Model model) throws Exception {
-         System.out.println("***************************************************************");
-        return null;
+    public JsonResult updateUser(HttpServletRequest request,@RequestBody String users) throws Exception {
+    	 User u =  JSON.parseObject( URLDecoder.decode(users).replace("Data=", ""), User.class);
+    	int i = userService.updateUserBycondition(u);
+    	 if(i>0)
+          	return new JsonResult(1,"修改成功",u,"");
+          else
+          	return new JsonResult(0,"修改失败，请重新修改",u,"");
 
 
     }
+    @RequestMapping(value="/register")
+    @ResponseBody
+    public JsonResult updateReg(HttpServletRequest request,@RequestBody String users) throws Exception {
+        
+         String str =  URLDecoder.decode(users).replace("Data=", "");
+         
+         User u =  JSON.parseObject(str, User.class);
+         int i = 0;
+         User user = userService.selectByMobile(u.getMobile());
+        if( user == null){
+        	i =  userService.add(u);
+        	 if(i>0)
+             	return new JsonResult(1,"注册成功",u,"");
+             else
+             	return new JsonResult(0,"注册失败，请重新注册",u,"");
+        }else{
+        	return new JsonResult(0,"该手机号已被注册",u,"");
+        }
+        // userService.add(u);
+     
+       
+        //return null;
 
+
+    }
+    @RequestMapping(value="/login")
+    @ResponseBody
+    public JsonResult login(HttpServletRequest request,@RequestBody String users) throws Exception {
+       
+       //  String str = ;
+       User u = userService.login( JSON.parseObject( URLDecoder.decode(users).replace("Data=", ""), User.class));
+        if(u != null)
+        	return new JsonResult(1,"登陆成功",u,"");
+        else
+        	return new JsonResult(0,"用户名或密码错误",u,"");
+        //return null;
+
+
+    }
+    
 }

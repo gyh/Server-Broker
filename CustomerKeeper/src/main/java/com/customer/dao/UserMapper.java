@@ -10,6 +10,12 @@ public interface UserMapper {
     User selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(User record);
+    
+    User selectLogin(User user);
+    
+    User selectByMobile(String mobile);
+    
+    
 
 //    int updateByPrimaryKey(User record);
 }

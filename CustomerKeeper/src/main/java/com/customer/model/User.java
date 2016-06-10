@@ -7,15 +7,15 @@ public class User {
 
     private String mobile;
 
-    private String password;
+    private String passwd;
 
-  //  private Date regTime;
+    private Date regTime;
 
     private Integer authorLevel;
 
     private Integer memberLevel;
 
-    private String nickname;
+    private String nickName;
     
     private String username;
     
@@ -24,13 +24,6 @@ public class User {
     
     
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public String getUsername() {
 		return username;
@@ -90,11 +83,29 @@ public class User {
         this.memberLevel = memberLevel;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
-    }
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getPasswd() {
+		return passwd;
+	}
+
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+
+	public Date getRegTime() {
+		return regTime;
+	}
+
+	public void setRegTime(Date regTime) {
+		this.regTime = regTime;
+	}
 }

@@ -1,8 +1,13 @@
 package com.customer.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.alibaba.fastjson.JSONObject;
 import com.customer.dao.UserMapper;
 import com.customer.model.User;
+
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +25,11 @@ public class UserService {
 
     public int add(User user) {
         logger.info("调用addUser开始");
+        Date date = new Date();
+       // SimpleDateFormat sdf = new SimpleDateFormat();
+        user.setRegTime(date);
         int insert = userMapper.insert(user);
+        System.out.println(user);
         logger.info("调用addUser完成");
         return insert;
 
@@ -39,6 +48,15 @@ public class UserService {
         logger.info("调用updateUserBycondition结束");
         return i;
     }
-
+    
+    public User login(User user){
+    	User u = userMapper.selectLogin(user);
+    	return u;
+    }
+    
+    public User selectByMobile(String mobile){
+    	User u = userMapper.selectByMobile(mobile);
+    	return u;
+    }
 
 }

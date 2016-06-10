@@ -33,19 +33,23 @@ public class AccountServiceImplTest {
 
     @Test
     public void loadXmL(){
-        System.out.println("==================启动Srping开始===================");
+        System.out.println("==================鍚姩Srping寮�===================");
         System.out.println("==================================================");
         System.out.println("==================================================");
         System.out.println("==================================================");
-
-        houseService.pagefindhouseByUserId(10L,1,3);
+        User user = new User();
+        user.setId(2l);
+        user.setUsername("wangzh");
+        user.setPasswd("123456");
+        userService.add(user);
+    //    houseService.pagefindhouseByUserId(10L,1,3);
 //        Account account = accountService.getAccountById(10);
 //        System.out.println(JSONObject.toJSONString(account));
 //
 //        Account account2 = accountService.getAccountByUserId(101);
 //        System.out.println(JSONObject.toJSONString(account2));
 //
-//        int num = accountService.addAccount(102);
+      //    int num = accountService.addAccount(102);
 //        System.out.println("result======"+num);
 //        List<AccountLog> ss = accountService.getAccountLogItemsByUserId(0, 1, 2);
 ////        accountLog.setUserId(101L);
@@ -62,7 +66,7 @@ public class AccountServiceImplTest {
 
 //        System.out.println("=========i=="+recharge);
 //        System.out.println("result======"+ JSONObject.toJSON(user));
-        System.out.println("===================测试结束===============================");
+        System.out.println("===================娴嬭瘯缁撴潫===============================");
 
     }
 }
