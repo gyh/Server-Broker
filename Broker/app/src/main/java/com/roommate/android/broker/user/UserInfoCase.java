@@ -43,7 +43,7 @@ public class UserInfoCase {
      * 获取用户名称
      * @return
      */
-    public static String getUserName(){
+    public static String getNickName(){
         UserInfo userInfo = getUserInfo();
         if(userInfo == null){
             return "-1";
@@ -63,10 +63,10 @@ public class UserInfoCase {
         String mobile = jsonObject.get("mobile").getAsString();
         String password = jsonObject.get("passwd").getAsString();
         String userName = "";
-        if(jsonObject.get("username").isJsonNull()){
+        if(jsonObject.get("nickName").isJsonNull()){
             userName = "";
         }else {
-            userName = jsonObject.get("username").getAsString();
+            userName = jsonObject.get("nickName").getAsString();
         }
 
         UserInfo userInfo = new UserInfo(userId,userName,password,userName);

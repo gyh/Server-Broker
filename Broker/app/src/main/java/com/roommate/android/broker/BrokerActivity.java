@@ -52,7 +52,7 @@ public class BrokerActivity extends BaseActivity{
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        tvUserName = (TextView) findViewById(R.id.tv_userName);
+
 
         //初始化时间选择
         initOrderDate();
@@ -77,7 +77,7 @@ public class BrokerActivity extends BaseActivity{
         mCustomersPresenter = new CustomersPresenter(CustomerRepository.getInstance(CustomerRemoteDataSource.getInstance(),
                 CustomerLocalDataScource.getInstance(getApplicationContext())),
                 customerListFragment);
-
+        tvUserName = (TextView) findViewById(R.id.tv_userName);
 
     }
 
@@ -89,7 +89,6 @@ public class BrokerActivity extends BaseActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        tvUserName.setText(UserInfoCase.getUserId());
     }
 
     @Override

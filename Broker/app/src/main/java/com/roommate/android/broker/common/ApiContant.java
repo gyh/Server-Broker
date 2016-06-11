@@ -7,7 +7,7 @@ public class ApiContant {
 
     public static boolean isDebug = true;
 
-    public static final String BASE_URL = "http://192.168.1.110:8080";
+    public static final String BASE_URL = "http://broker.applinzi.com";
 
 
     public static final String DATA = "Data";

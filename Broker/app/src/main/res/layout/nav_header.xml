@@ -33,6 +33,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:text="13240129876" />
+        android:text="" />
 
 </FrameLayout>
