@@ -34,7 +34,7 @@ public class HouseService {
     }
 
     public JsonResult pagefindhouseByUserId(Long userid,int page,int size){
-        logger.info("调用AddHouse接口开始");
+        logger.info("调用pagefindhouseByUserId接口开始");
         Map map = new HashMap<String,Object>();
         map.put("userId", userid);
         if(page>0&&size>0){
@@ -44,11 +44,11 @@ public class HouseService {
         List<House> houses = houseMapper.pagefindhouseByUserId(map);
 
         if(houses==null){
-            logger.info("调用AddHouse接口错误");
+            logger.info("调用pagefindhouseByUserId接口错误");
             return new JsonResult(0,"error",null,"");
         }
         JsonResult jsonResult =  new JsonResult(0,"successfully",houses,"");
-        logger.info("调用AddHouse接口完成，result={}", JSONObject.toJSON(jsonResult));
+        logger.info("调用pagefindhouseByUserId接口完成，result={}", JSONObject.toJSON(jsonResult));
         return jsonResult;
     }
 

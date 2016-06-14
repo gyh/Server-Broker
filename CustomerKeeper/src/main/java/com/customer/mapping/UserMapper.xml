@@ -8,14 +8,18 @@
     <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
     <result column="author_level" property="authorLevel" jdbcType="INTEGER" />
     <result column="member_level" property="memberLevel" jdbcType="INTEGER" />
-    <result column="nickName" property="nick_name" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, mobile, passwd, reg_time, author_level, member_level, nick_name
+    id, mobile, passwd, reg_time, author_level, member_level, nickname
   </sql>
   <insert id="insert" parameterType="com.customer.model.User"  useGeneratedKeys="true" keyProperty="id">
-    insert into user (mobile, passwd,reg_time, author_level, member_level,nick_name)
-    values (#{mobile,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, #{authorLevel,jdbcType=INTEGER}, #{memberLevel,jdbcType=INTEGER},#{nickName,jdbcType=VARCHAR})
+    insert into user (mobile, passwd,
+    reg_time, author_level, member_level,
+    nickname)
+    values (#{mobile,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
+    #{regTime,jdbcType=TIMESTAMP}, #{authorLevel,jdbcType=INTEGER}, #{memberLevel,jdbcType=INTEGER},
+    #{nickname,jdbcType=VARCHAR})
   </insert>
 
 
@@ -25,21 +29,6 @@
     from user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  
-  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where mobile = #{mobile,jdbcType=VARCHAR}
-  </select>
-  <!-- login select start -->
-  <select id="selectLogin" resultMap="BaseResultMap" parameterType="com.customer.model.User" >
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where mobile = #{mobile,jdbcType=VARCHAR} and passwd = #{passwd,jdbcType=VARCHAR}
-  </select>
-  <!-- login select and  -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user
     where id = #{id,jdbcType=BIGINT}
@@ -63,8 +52,8 @@
       <if test="memberLevel != null" >
         member_level = #{memberLevel,jdbcType=INTEGER},
       </if>
-      <if test="nickName != null" >
-        nickName = #{nickName,jdbcType=VARCHAR},
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

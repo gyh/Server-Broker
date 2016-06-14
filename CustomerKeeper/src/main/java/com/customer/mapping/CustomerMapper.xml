@@ -11,18 +11,21 @@
     <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
     <result column="buy_demand" property="buyDemand" jdbcType="VARCHAR" />
     <result column="buy_power" property="buyPower" jdbcType="INTEGER" />
+    <result column="houseArea" property="houseArea" jdbcType="VARCHAR" />
+    <result column="appoint_time" property="appointTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, name, mobile, create_time, customer_type, isdelete, buy_demand, buy_power
+    id, user_id, name, mobile, create_time, customer_type, isdelete, buy_demand, buy_power,houseArea,appoint_time
   </sql>
   <insert id="insert" parameterType="com.customer.model.Customer"  useGeneratedKeys="true" keyProperty="id">
     insert into customer (user_id, name,
     mobile, create_time, customer_type,
-    isdelete, buy_demand, buy_power
+    isdelete, buy_demand, buy_power,houseArea,appoint_time
     )
     values ( #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
     #{mobile,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{customerType,jdbcType=INTEGER},
-    #{isdelete,jdbcType=INTEGER}, #{buyDemand,jdbcType=VARCHAR}, #{buyPower,jdbcType=INTEGER}
+    #{isdelete,jdbcType=INTEGER}, #{buyDemand,jdbcType=VARCHAR}, #{buyPower,jdbcType=INTEGER},
+    #{houseArea,jdbcType=VARCHAR},#{appointTime,jdbcType=TIMESTAMP}
     )
   </insert>
 
@@ -33,6 +36,13 @@
     from customer
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from customer
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from customer
     where id = #{id,jdbcType=BIGINT}
@@ -65,6 +75,14 @@
       <if test="buyPower != null" >
         buy_power = #{buyPower,jdbcType=INTEGER},
       </if>
+
+      <if test="houseArea != null" >
+        houseArea=#{houseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="appointTime != null" >
+        appoint_time=#{appointTime,jdbcType=TIMESTAMP}
+      </if>
+
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -77,7 +95,9 @@
       customer_type = #{customerType,jdbcType=INTEGER},
       isdelete = #{isdelete,jdbcType=INTEGER},
       buy_demand = #{buyDemand,jdbcType=VARCHAR},
-      buy_power = #{buyPower,jdbcType=INTEGER}
+      buy_power = #{buyPower,jdbcType=INTEGER},
+      houseArea=#{houseArea,jdbcType=VARCHAR},
+      appoint_time=#{appointTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

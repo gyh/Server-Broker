@@ -73,7 +73,8 @@ public class UserController {
          
          User u =  JSON.parseObject(str, User.class);
          int i = 0;
-         User user = userService.selectByMobile(u.getMobile());
+         User user = null;
+//                 userService.selectByMobile(u.getMobile());
         if( user == null){
         	i =  userService.add(u);
         	 if(i>0)
@@ -95,7 +96,8 @@ public class UserController {
     public JsonResult login(HttpServletRequest request,@RequestBody String users) throws Exception {
        
        //  String str = ;
-       User u = userService.login( JSON.parseObject( URLDecoder.decode(users).replace("Data=", ""), User.class));
+       User u = null;
+//               userService.login( JSON.parseObject( URLDecoder.decode(users).replace("Data=", ""), User.class));
         if(u != null)
         	return new JsonResult(1,"登陆成功",u,"");
         else

@@ -3,6 +3,7 @@ package com.customer.model;
 import java.util.Date;
 
 public class Customer {
+
     private Long id;
 
     private Long userId;
@@ -20,6 +21,26 @@ public class Customer {
     private String buyDemand;
 
     private Integer buyPower;
+
+    private String houseArea;
+
+    private Date appointTime;
+
+    public String getHouseArea() {
+        return houseArea;
+    }
+
+    public void setHouseArea(String houseArea) {
+        this.houseArea = houseArea;
+    }
+
+    public Date getAppointTime() {
+        return appointTime;
+    }
+
+    public void setAppointTime(Date appointTime) {
+        this.appointTime = appointTime;
+    }
 
     public Long getId() {
         return id;
