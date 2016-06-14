@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 			<input type="button" id="btn" value="登陆" />
-
+欢迎使用中介笔记软件
   </body>
 </html>
 
