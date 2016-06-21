@@ -35,9 +35,7 @@
     <!--dubbo zookeeper  end-->
   </properties>
 
-
   <dependencies>
-
 
     <dependency>
       <groupId>org.slf4j</groupId>
