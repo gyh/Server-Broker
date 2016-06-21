@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.stat.customer</groupId>
-  <artifactId>broker</artifactId>
+  <artifactId>customer</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>customer Maven Webapp</name>
@@ -207,7 +207,7 @@
   </dependencies>
 
   <build>
-    <finalName>broker</finalName>
+    <finalName>customer</finalName>
     <resources>
       <resource>
         <directory>src/main/java</directory>
