@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by wangpeng on 16/5/17.
@@ -18,6 +19,7 @@ public class UserService {
     @Autowired
     public UserMapper userMapper;
 
+    @Transactional
     public int add(User user) {
         logger.info("调用addUser开始");
         int insert = userMapper.insert(user);
@@ -25,7 +27,7 @@ public class UserService {
         return insert;
 
     }
-
+    @Transactional
     public User findUserById(Long id){
         logger.info("调用findUserById开始");
         User user = userMapper.selectByPrimaryKey(id);
@@ -33,6 +35,7 @@ public class UserService {
         return user;
     }
 
+    @Transactional
     public int updateUserBycondition(User user){
         logger.info("调用updateUserBycondition开始");
         int i = userMapper.updateByPrimaryKeySelective(user);

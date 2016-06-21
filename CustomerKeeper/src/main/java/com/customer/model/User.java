@@ -9,38 +9,15 @@ public class User {
 
     private String passwd;
 
-  //  private Date regTime;
+    private Date regTime;
 
     private Integer authorLevel;
 
     private Integer memberLevel;
 
     private String nickname;
-    
-    private String userNmae;
-    
-    private String address;
-    
-    
-    
 
-    public String getUserNmae() {
-		return userNmae;
-	}
-
-	public void setUserNmae(String userNmae) {
-		this.userNmae = userNmae;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -64,13 +41,13 @@ public class User {
         this.passwd = passwd == null ? null : passwd.trim();
     }
 
-   /* public Date getRegTime() {
+    public Date getRegTime() {
         return regTime;
     }
 
     public void setRegTime(Date regTime) {
         this.regTime = regTime;
-    }*/
+    }
 
     public Integer getAuthorLevel() {
         return authorLevel;

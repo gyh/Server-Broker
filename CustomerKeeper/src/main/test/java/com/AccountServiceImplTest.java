@@ -33,15 +33,16 @@ public class AccountServiceImplTest {
 
     @Test
     public void loadXmL(){
-        System.out.println("==================鍚姩Srping寮�===================");
+        System.out.println("==================测试开始==================");
         System.out.println("==================================================");
         System.out.println("==================================================");
         System.out.println("==================================================");
-        User user = new User();
-        user.setId(2l);
-        user.setUsername("wangzh");
-        user.setPasswd("123456");
-        userService.add(user);
+//        User user = new User();
+//        user.setMobile("13121345061");
+//        user.setId(2l);
+//        user.setUsername("wangzh");
+//        user.setPasswd("123456");
+//        userService.add(user);
     //    houseService.pagefindhouseByUserId(10L,1,3);
 //        Account account = accountService.getAccountById(10);
 //        System.out.println(JSONObject.toJSONString(account));
@@ -56,17 +57,16 @@ public class AccountServiceImplTest {
 ////        accountLog.setTradeCode("ZC10000");
 //        AccountLog accountLogByCondition = accountService.getAccountLogByCondition(accountLog);
 //
-//        User user = new User();
-//        user.setId(1L);
-//        user.setAuthorlevel(1);
-//        user.setMemberlevel(2);
-//        user.setPasswd("22222");
+        User user = new User();
+        user.setId(2L);
+        user.setMobile("13121345061");
+        user.setPasswd("111111");
 //        int recharge = userService.updateUserBycondition(user)
-
+        int add = userService.add(user);
 
 //        System.out.println("=========i=="+recharge);
-//        System.out.println("result======"+ JSONObject.toJSON(user));
-        System.out.println("===================娴嬭瘯缁撴潫===============================");
+        System.out.println("result======"+ JSONObject.toJSON(user));
+        System.out.println("===================测试完成==============================="+add);
 
     }
 }
