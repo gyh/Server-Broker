@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.roommate.android.broker.common.ApiContant;
 import com.roommate.android.broker.common.JsonUtils;
+import com.roommate.android.broker.customer.data.RemoteOp;
 import com.roommate.android.broker.user.UserInfoCase;
 import com.roommate.android.broker.customer.data.Customer;
 import com.roommate.android.broker.customer.data.source.CustomerDataSource;
@@ -36,16 +37,14 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
     private static CustomerRemoteDataSource INSTANCE;
 
-    private final static List<RemoteOpData> REMOTE_OP_DATA_MAP;
-
-    static {
-        REMOTE_OP_DATA_MAP = new LinkedList<>();
-    }
 
     // Prevent direct instantiation.
     private CustomerRemoteDataSource() {}
 
     public static CustomerRemoteDataSource getInstance() {
+
+        LogUtil.d("创建线上客户数据 初始化线上数据操作");
+
         if (INSTANCE == null) {
             INSTANCE = new CustomerRemoteDataSource();
         }
@@ -54,60 +53,23 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
 
     @Override
-    public void synCustomer(@NonNull final SynCustomerCallback callback) {
-        // TODO: 2016/6/1操作数据
-
-        RequestParams params = new RequestParams(ApiContant.CUSTOMER_SYNDATA_URL);
-
-        String gson =  new Gson().toJson(REMOTE_OP_DATA_MAP);
-
-        params.addBodyParameter(ApiContant.DATA,gson);
-
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(final String result) {
-                LogUtil.d("  ----output---   " + result);
-                if(JsonUtils.isResultSuccess(result)){
-                    REMOTE_OP_DATA_MAP.clear();
-                    callback.onSynSuccess();
-                }else {
-                    callback.onSynError();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                callback.onSynError();
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
-
-    @Override
     public void getCustomers(@NonNull final LoadCustomersCallback callback) {
 
-        // TODO: 2016/6/1 获取数据
+        checkNotNull(callback);
+
+        LogUtil.d("线上客户数据 获取线上全部数据");
 
         RequestParams params = new RequestParams(ApiContant.CUSTOMER_GETDATA_URL);
 
-        RemoteOpData remoteOpData  = new RemoteOpData(UserInfoCase.getUserId(),"","","");
+        RemoteOp remoteOp = new RemoteOp(UserInfoCase.getUserId(),"","","");
 
-        String gson =  new Gson().toJson(remoteOpData);
+        String gson =  new Gson().toJson(remoteOp);
 
         params.addBodyParameter(ApiContant.DATA,gson);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(final String result) {
-                LogUtil.d("  ----output---   " + result);
+                LogUtil.d("线上客户数据 获取线上全部数据  result = "+ result);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -155,60 +117,16 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
     @Override
     public void getCustomer(@NonNull String customerId, @NonNull final GetCustomerCallback callback) {
-        RequestParams requestParams = new RequestParams("");
 
-        LogUtil.d("  ----Input---   " + requestParams.toString());
-        x.http().get(requestParams, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-
-                LogUtil.d("  ----output---   " + result);
-                Handler handler = new Handler();
-                final Customer house = new Customer(System.currentTimeMillis()+"",
-                        "郭跃华",
-                        "13240123693",
-                        "3",
-                        "90",
-                        "123151651565465",
-                        "2016-9-11");
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //todo 处理数据
-                        callback.onCustomerLoader(house);
-                    }
-                });
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                callback.onDataNotAvailable();
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
     }
 
     @Override
     public void saveCustomer(@NonNull Customer customer) {
-        checkNotNull(customer);
-        RemoteOpData remoteOpData = new RemoteOpData(UserInfoCase.getUserId(),RemoteOpData.CUSTOMERDATA,RemoteOpData.ADDOPT,customer.toString());
-        REMOTE_OP_DATA_MAP.add(remoteOpData);
     }
 
     @Override
     public void updataCustomer(@NonNull Customer customer) {
-        checkNotNull(customer);
-        RemoteOpData remoteOpData = new RemoteOpData(UserInfoCase.getUserId(),RemoteOpData.CUSTOMERDATA,RemoteOpData.UPDOPT,customer.toString());
-        REMOTE_OP_DATA_MAP.add(remoteOpData);
+
     }
 
     @Override
@@ -223,9 +141,7 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
     @Override
     public void deleteCustomer(@NonNull String customerId) {
-        checkNotNull(customerId);
-        RemoteOpData remoteOpData = new RemoteOpData(UserInfoCase.getUserId(),RemoteOpData.CUSTOMERDATA,RemoteOpData.DELOPT,customerId);
-        REMOTE_OP_DATA_MAP.add(remoteOpData);
+
     }
 
     @Override

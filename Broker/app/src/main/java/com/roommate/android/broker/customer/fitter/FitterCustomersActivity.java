@@ -18,7 +18,7 @@ import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDat
  */
 public class FitterCustomersActivity extends BaseActivity{
 
-    private static final String FITTER_DATE_KEY = "fitterDateKey";
+    public static final String FITTER_DATE_KEY = "fitterDateKey";
 
     private FitterCustomerContract.Presenter mPresenter;
 

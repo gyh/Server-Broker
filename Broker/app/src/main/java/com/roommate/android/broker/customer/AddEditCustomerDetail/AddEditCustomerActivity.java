@@ -5,15 +5,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.ActivityUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
+import com.roommate.android.broker.customer.data.source.RemoteOpRepository;
 import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
+import com.roommate.android.broker.customer.data.source.local.RemoteOpLocalDataScource;
 import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
+import com.roommate.android.broker.customer.data.source.remote.RemoteOpRemoteDataScource;
 
 /**
  * Created by GYH on 2016/5/19.
@@ -81,7 +82,7 @@ public class AddEditCustomerActivity extends BaseActivity {
         // Create the presenter
         presenter = new AddEditCustomerPresenter(CustomerRepository.getInstance(CustomerRemoteDataSource.getInstance(), CustomerLocalDataScource.getInstance(this)),
                 customerId,
-                addEditCustomerFragment);
+                addEditCustomerFragment, RemoteOpRepository.getInstance(RemoteOpRemoteDataScource.getInstance(), RemoteOpLocalDataScource.getInstance(this)));
 
     }
 

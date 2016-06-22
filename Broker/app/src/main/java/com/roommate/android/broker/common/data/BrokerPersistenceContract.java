@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.roommate.android.broker.customer.data.source.local;
+package com.roommate.android.broker.common.data;
 
 import android.provider.BaseColumns;
 
 /**
  * The contract used for the db to save the tasks locally.
  */
-public final class CustomersPersistenceContract {
+public final class BrokerPersistenceContract {
 
     // To prevent someone from accidentally instantiating the contract class,
     // give it an empty constructor.
-    public CustomersPersistenceContract() {}
+    public BrokerPersistenceContract() {}
 
     /* Inner class that defines the table contents */
     public static abstract class CustomerEntry implements BaseColumns {
@@ -47,7 +47,6 @@ public final class CustomersPersistenceContract {
         public static final String COLUMN_NAME_INPUTDATE = "inputDate";
     }
 
-    @Deprecated
     public static abstract class RemoteOpEntry implements BaseColumns{
         //表名
         public static final String TABLE_NAME = "remoteOp";

@@ -27,7 +27,8 @@
         android:text="敬请期待"
         android:layout_centerInParent="true"
         android:textColor="@color/app_theme_color"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:elevation="5dp"/>
 
     <WebView
         android:layout_below="@id/viewToolbar"

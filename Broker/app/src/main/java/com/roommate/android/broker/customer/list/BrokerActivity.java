@@ -1,4 +1,4 @@
-package com.roommate.android.broker;
+package com.roommate.android.broker.customer.list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +12,18 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
+import com.roommate.android.broker.AboutActivity;
+import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.ActivityUtils;
 import com.roommate.android.broker.common.DateUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
+import com.roommate.android.broker.customer.data.source.RemoteOpRepository;
+import com.roommate.android.broker.customer.data.source.local.RemoteOpLocalDataScource;
+import com.roommate.android.broker.customer.data.source.remote.RemoteOpRemoteDataScource;
 import com.roommate.android.broker.customer.searchCustomer.SearchCustomerActivity;
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
 import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
 import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
-import com.roommate.android.broker.customer.list.CustomerListFragment;
-import com.roommate.android.broker.customer.list.CustomersPresenter;
-import com.roommate.android.broker.user.UserInfoCase;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -76,7 +78,8 @@ public class BrokerActivity extends BaseActivity{
         // Create the presenter
         mCustomersPresenter = new CustomersPresenter(CustomerRepository.getInstance(CustomerRemoteDataSource.getInstance(),
                 CustomerLocalDataScource.getInstance(getApplicationContext())),
-                customerListFragment);
+                customerListFragment, RemoteOpRepository.getInstance(RemoteOpRemoteDataScource.getInstance(),
+                RemoteOpLocalDataScource.getInstance(getApplicationContext())));
         tvUserName = (TextView) findViewById(R.id.tv_userName);
 
     }
@@ -105,6 +108,11 @@ public class BrokerActivity extends BaseActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void loginResult(Intent data) {
+        mCustomersPresenter.start();
     }
 
     @Override

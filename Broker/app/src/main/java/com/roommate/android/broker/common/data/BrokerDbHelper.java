@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package com.roommate.android.broker.customer.data.source.local;
+package com.roommate.android.broker.common.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class CustomersDbHelper extends SQLiteOpenHelper {
+public class BrokerDbHelper extends SQLiteOpenHelper {
+
+    private static BrokerDbHelper brokerDbHelper;
+
     public static final int DATABASE_VERSION = 1;
 
     public static final String DATABASE_NAME = "Broker.db";
@@ -34,26 +37,33 @@ public class CustomersDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_CUSTOMER_ENTRIES =
-            "CREATE TABLE " + CustomersPersistenceContract.CustomerEntry.TABLE_NAME + " (" +
-                    CustomersPersistenceContract.CustomerEntry.COLUMN_NAME_CUSTOMER_ID + TEXT_TYPE + " PRIMARY KEY," +
-                    CustomersPersistenceContract.CustomerEntry.COLUMN_NAME_CUSTOMER_NAME + TEXT_TYPE + COMMA_SEP +
-                    CustomersPersistenceContract.CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER + TEXT_TYPE + COMMA_SEP +
-                    CustomersPersistenceContract.CustomerEntry.COLUMN_NAME_DESCRIBE + TEXT_TYPE + COMMA_SEP +
-                    CustomersPersistenceContract.CustomerEntry.COLUMN_NAME_DESIRE + TEXT_TYPE + COMMA_SEP +
-                    CustomersPersistenceContract.CustomerEntry.COLUMN_NAME_HOUSE_AREA + TEXT_TYPE + COMMA_SEP +
-                    CustomersPersistenceContract.CustomerEntry.COLUMN_NAME_INPUTDATE + TEXT_TYPE +
+            "CREATE TABLE " + BrokerPersistenceContract.CustomerEntry.TABLE_NAME + " (" +
+                    BrokerPersistenceContract.CustomerEntry.COLUMN_NAME_CUSTOMER_ID + TEXT_TYPE + " PRIMARY KEY," +
+                    BrokerPersistenceContract.CustomerEntry.COLUMN_NAME_CUSTOMER_NAME + TEXT_TYPE + COMMA_SEP +
+                    BrokerPersistenceContract.CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER + TEXT_TYPE + COMMA_SEP +
+                    BrokerPersistenceContract.CustomerEntry.COLUMN_NAME_DESCRIBE + TEXT_TYPE + COMMA_SEP +
+                    BrokerPersistenceContract.CustomerEntry.COLUMN_NAME_DESIRE + TEXT_TYPE + COMMA_SEP +
+                    BrokerPersistenceContract.CustomerEntry.COLUMN_NAME_HOUSE_AREA + TEXT_TYPE + COMMA_SEP +
+                    BrokerPersistenceContract.CustomerEntry.COLUMN_NAME_INPUTDATE + TEXT_TYPE +
             " )";
 
     private static final String SQL_CREATE_REMOTE_ENTRIES =
-            "CREATE TABLE " + CustomersPersistenceContract.RemoteOpEntry.TABLE_NAME + " (" +
-                    CustomersPersistenceContract.RemoteOpEntry.COLUMN_NAME_OP_ID + INTEGER_TYPE + " PRIMARY KEY autoincrement," +
-                    CustomersPersistenceContract.RemoteOpEntry.COLUMN_NAME_OP_TYPE + TEXT_TYPE + COMMA_SEP +
-                    CustomersPersistenceContract.RemoteOpEntry.COLUMN_NAME_OP_DATA_TYPE + TEXT_TYPE + COMMA_SEP +
-                    CustomersPersistenceContract.RemoteOpEntry.COLUMN_NAME_OP_DETAILS + TEXT_TYPE +
+            "CREATE TABLE " + BrokerPersistenceContract.RemoteOpEntry.TABLE_NAME + " (" +
+                    BrokerPersistenceContract.RemoteOpEntry.COLUMN_NAME_OP_ID + INTEGER_TYPE + " PRIMARY KEY autoincrement," +
+                    BrokerPersistenceContract.RemoteOpEntry.COLUMN_NAME_OP_TYPE + TEXT_TYPE + COMMA_SEP +
+                    BrokerPersistenceContract.RemoteOpEntry.COLUMN_NAME_OP_DATA_TYPE + TEXT_TYPE + COMMA_SEP +
+                    BrokerPersistenceContract.RemoteOpEntry.COLUMN_NAME_OP_DETAILS + TEXT_TYPE +
                     " )";
 
-    public CustomersDbHelper(Context context) {
+    private BrokerDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static BrokerDbHelper initNintce(Context context){
+        if(brokerDbHelper == null){
+            brokerDbHelper = new BrokerDbHelper(context);
+        }
+        return brokerDbHelper;
     }
 
     @Override
@@ -69,7 +79,7 @@ public class CustomersDbHelper extends SQLiteOpenHelper {
 
         //创建
         db.execSQL(SQL_CREATE_CUSTOMER_ENTRIES);
-//        db.execSQL(SQL_CREATE_REMOTE_ENTRIES);
+        db.execSQL(SQL_CREATE_REMOTE_ENTRIES);
     }
 
     @Override
@@ -83,7 +93,7 @@ public class CustomersDbHelper extends SQLiteOpenHelper {
          */
 
         db.execSQL( "DROP TABLE IF EXISTS " + SQL_CREATE_CUSTOMER_ENTRIES );
-//        db.execSQL( "DROP TABLE IF EXISTS " + SQL_CREATE_REMOTE_ENTRIES );
+        db.execSQL( "DROP TABLE IF EXISTS " + SQL_CREATE_REMOTE_ENTRIES );
         onCreate(db);
     }
 

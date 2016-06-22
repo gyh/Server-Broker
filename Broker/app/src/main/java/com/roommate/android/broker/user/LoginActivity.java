@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.ApiContant;
 import com.roommate.android.broker.common.JsonUtils;
@@ -49,12 +50,16 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(ApiContant.isDebug){
-//                    UserInfoCase.loginss = true;
-//                    setResult(RESULT_OK);
-//                    finish();
-//                    return;
-//                }
+                if(ApiContant.isDebug){
+                    Map map = new HashMap();
+                    map.put("id","12");
+                    map.put("mobile","13240125698");
+                    map.put("passwd","kdfjkdfj");
+                    UserInfoCase.saveUserInfo(new Gson().toJsonTree(map).getAsJsonObject());
+                    setResult(RESULT_OK);
+                    finish();
+                    return;
+                }
                 if(checkVaule()){
                     loginService();
                 }

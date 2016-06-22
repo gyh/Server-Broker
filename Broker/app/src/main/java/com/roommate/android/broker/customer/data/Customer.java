@@ -116,7 +116,7 @@ public final class Customer {
         customer.setId(mId);
         customer.setMobile(phoneNumber);
         customer.setAppointTime(inputDate);
-        customer.setBuyPower(Integer.valueOf(describe));
+        customer.setBuyPower(Integer.valueOf(desire));
         customer.setHouseArea(houseArea);
         customer.setName(name);
         customer.setUserId(Long.valueOf(UserInfoCase.getUserId()));

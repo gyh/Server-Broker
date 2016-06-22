@@ -6,12 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
+import com.roommate.android.broker.common.data.BrokerDbHelper;
+import com.roommate.android.broker.common.data.DatabaseManager;
 import com.roommate.android.broker.customer.data.Customer;
 import com.roommate.android.broker.customer.data.source.CustomerDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.roommate.android.broker.customer.data.source.local.CustomersPersistenceContract.CustomerEntry;
+import com.roommate.android.broker.common.data.BrokerPersistenceContract.CustomerEntry;
+
+import org.xutils.common.util.LogUtil;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -30,15 +34,13 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
     private static CustomerLocalDataScource INSTANCE;
 
-    private CustomersDbHelper mDbHelper;
-
     // Prevent direct instantiation.
     private CustomerLocalDataScource(@NonNull Context context) {
         checkNotNull(context);
-        mDbHelper = new CustomersDbHelper(context);
     }
 
     public static CustomerLocalDataScource getInstance(@NonNull Context context) {
+        LogUtil.d("创建本地客户数据--------");
         if (INSTANCE == null) {
             INSTANCE = new CustomerLocalDataScource(context);
         }
@@ -46,14 +48,15 @@ public class CustomerLocalDataScource implements CustomerDataSource{
     }
 
     @Override
-    public void synCustomer(@NonNull SynCustomerCallback callback) {
-
-    }
-
-    @Override
     public void getCustomers(@NonNull LoadCustomersCallback callback) {
-        List<Customer> customers = new ArrayList<Customer>();
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        LogUtil.d("本地客户数据操作-------- 获取本地所有客户");
+
+        checkNotNull(callback);
+
+        List<Customer> customers = new ArrayList<>();
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
 
         String[] projection = {
                 CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
@@ -65,7 +68,7 @@ public class CustomerLocalDataScource implements CustomerDataSource{
                 CustomerEntry.COLUMN_NAME_INPUTDATE
         };
 
-        Cursor c = db.query(
+        Cursor c = liteDatabase.query(
                 CustomerEntry.TABLE_NAME, projection, null, null, null, null, null);
 
         if (c != null && c.getCount() > 0) {
@@ -78,6 +81,7 @@ public class CustomerLocalDataScource implements CustomerDataSource{
                 String describe =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESCRIBE));
                 String inputDate =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_INPUTDATE));
                 Customer customer = new Customer(itemId, name, phoneNumber, desire,houseArea,describe,inputDate);
+                LogUtil.d("本地客户数据操作---- customer ---- "+ customer.toString());
                 customers.add(customer);
             }
         }
@@ -85,7 +89,7 @@ public class CustomerLocalDataScource implements CustomerDataSource{
             c.close();
         }
 
-        db.close();
+        DatabaseManager.getInstance().closeDatabase();
 
         if (customers.isEmpty()) {
             // This will be called if the table is new or just empty.
@@ -97,7 +101,12 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
     @Override
     public void getCustomer(@NonNull String customerId, @NonNull GetCustomerCallback callback) {
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        LogUtil.d("本地客户数据操作---- 获取客户  customerId =  "+ customerId);
+
+//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
 
         String[] projection = {
                 CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
@@ -112,7 +121,7 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         String selection = CustomerEntry.COLUMN_NAME_CUSTOMER_ID + " LIKE ?";
         String[] selectionArgs = { customerId };
 
-        Cursor c = db.query(
+        Cursor c = liteDatabase.query(
                 CustomerEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
 
         Customer customer = null;
@@ -128,11 +137,14 @@ public class CustomerLocalDataScource implements CustomerDataSource{
             String inputDate =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_INPUTDATE));
             customer = new Customer(itemId, name, phoneNumber, desire,houseArea,describe,inputDate);
         }
+
+        LogUtil.d("本地客户数据操作---- 获取客户  customer =  "+ customer.toString());
+
         if (c != null) {
             c.close();
         }
 
-        db.close();
+        DatabaseManager.getInstance().closeDatabase();
 
         if (customer != null) {
             callback.onCustomerLoader(customer);
@@ -143,8 +155,13 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
     @Override
     public void saveCustomer(@NonNull Customer customer) {
+
+        LogUtil.d("本地客户数据操作---- 保存  customer =  "+ customer.toString());
+
         checkNotNull(customer);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(CustomerEntry.COLUMN_NAME_CUSTOMER_ID, customer.getmId());
@@ -155,14 +172,25 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         values.put(CustomerEntry.COLUMN_NAME_DESCRIBE, customer.getDescribe());
         values.put(CustomerEntry.COLUMN_NAME_INPUTDATE, customer.getInputDate());
 
-        db.insert(CustomerEntry.TABLE_NAME, null, values);
+        liteDatabase.insert(CustomerEntry.TABLE_NAME, null, values);
 
-        db.close();
+        LogUtil.d("本地客户数据操作---- 保存 成功 ");
+
+        DatabaseManager.getInstance().closeDatabase();
+
+//        db.close();
     }
 
     @Override
     public void updataCustomer(@NonNull Customer customer) {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        checkNotNull(customer);
+
+        LogUtil.d("本地客户数据操作---- 更新客户  customer = "+customer.toString() );
+
+//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(CustomerEntry.COLUMN_NAME_CUSTOMER_NAME, customer.getName());
@@ -175,9 +203,13 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         String selection = CustomerEntry.COLUMN_NAME_CUSTOMER_ID + " LIKE ?";
         String[] selectionArgs = { customer.getmId() };
 
-        db.update(CustomerEntry.TABLE_NAME, values, selection, selectionArgs);
+        liteDatabase.update(CustomerEntry.TABLE_NAME, values, selection, selectionArgs);
 
-        db.close();
+        LogUtil.d("本地客户数据操作---- 更新客户成功");
+
+        DatabaseManager.getInstance().closeDatabase();
+
+//        db.close();
     }
 
     @Override
@@ -187,28 +219,53 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
     @Override
     public void deleteAllCustomers() {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        db.delete(CustomerEntry.TABLE_NAME, null, null);
+        LogUtil.d("本地客户数据操作---- 删除所有客户");
 
-        db.close();
+//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
+
+        liteDatabase.delete(CustomerEntry.TABLE_NAME, null, null);
+
+        DatabaseManager.getInstance().closeDatabase();
+
+//        db.close();
     }
 
     @Override
     public void deleteCustomer(@NonNull String customerId) {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        checkNotNull(customerId);
+
+        LogUtil.d("本地客户数据操作---- 删除客户 customerId = "+customerId);
+
+//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
         String selection = CustomerEntry.COLUMN_NAME_CUSTOMER_ID + " LIKE ?";
         String[] selectionArgs = { customerId };
 
-        db.delete(CustomerEntry.TABLE_NAME, selection, selectionArgs);
+        liteDatabase.delete(CustomerEntry.TABLE_NAME, selection, selectionArgs);
 
-        db.close();
+        LogUtil.d("本地客户数据操作---- 删除客户成功 customerId = "+customerId);
+
+        DatabaseManager.getInstance().closeDatabase();
+
+//        db.close();
     }
 
     @Override
     public void searchPhoneNumber(@NonNull String phoneNumber,@NonNull LoadCustomersCallback callback) {
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        checkNotNull(phoneNumber);
+
+        LogUtil.d("本地客户数据操作---- 查询客户手机号 phoneNumber = "+phoneNumber);
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
+
+//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
                 CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
@@ -223,7 +280,7 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         String selection = CustomerEntry.COLUMN_NAME_CUSTOMER_PHONE_NUMBER + " LIKE ?";
         String[] selectionArgs = { "%"+phoneNumber +"%"};
 
-        Cursor c = db.query(
+        Cursor c = liteDatabase.query(
                 CustomerEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
 
         List<Customer> customers = new ArrayList<>();
@@ -238,6 +295,9 @@ public class CustomerLocalDataScource implements CustomerDataSource{
                 String describe =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESCRIBE));
                 String inputDate =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_INPUTDATE));
                 Customer customer = new Customer(itemId, name, phoneNumbera, desire,houseArea,describe,inputDate);
+
+                LogUtil.d("本地客户数据操作---- 查询客户手机号 customer = "+customer.toString());
+
                 customers.add(customer);
             }
         }
@@ -245,7 +305,9 @@ public class CustomerLocalDataScource implements CustomerDataSource{
             c.close();
         }
 
-        db.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+//        db.close();
 
         if (customers.isEmpty()) {
             // This will be called if the table is new or just empty.
@@ -257,7 +319,14 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
     @Override
     public void searchName(@NonNull String name,@NonNull LoadCustomersCallback callback) {
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        checkNotNull(name);
+
+        LogUtil.d("本地客户数据操作---- 查询客户姓名 name = "+name);
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
+
+//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
                 CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
@@ -272,7 +341,7 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         String selection = CustomerEntry.COLUMN_NAME_CUSTOMER_NAME + " LIKE ?";
         String[] selectionArgs = {"%"+ name +"%" };
 
-        Cursor c = db.query(
+        Cursor c = liteDatabase.query(
                 CustomerEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
 
         List<Customer> customers = new ArrayList<>();
@@ -287,6 +356,9 @@ public class CustomerLocalDataScource implements CustomerDataSource{
                 String describe =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESCRIBE));
                 String inputDate =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_INPUTDATE));
                 Customer customer = new Customer(itemId, namea, phoneNumbera, desire,houseArea,describe,inputDate);
+
+                LogUtil.d("本地客户数据操作---- 查询客户姓名 customer = "+customer.toString());
+
                 customers.add(customer);
             }
         }
@@ -294,7 +366,9 @@ public class CustomerLocalDataScource implements CustomerDataSource{
             c.close();
         }
 
-        db.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+//        db.close();
 
         if (customers.isEmpty()) {
             // This will be called if the table is new or just empty.
@@ -306,7 +380,14 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
     @Override
     public void searchInputDate(@NonNull String dateStr, @NonNull LoadCustomersCallback callback) {
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        checkNotNull(dateStr);
+
+        LogUtil.d("本地客户数据操作---- 查询客户日期 dateStr = "+dateStr);
+
+        SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
+
+//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
                 CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
@@ -321,7 +402,7 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         String selection = CustomerEntry.COLUMN_NAME_INPUTDATE + " LIKE ?";
         String[] selectionArgs = {"%"+ dateStr +"%" };
 
-        Cursor c = db.query(
+        Cursor c = liteDatabase.query(
                 CustomerEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
 
         List<Customer> customers = new ArrayList<>();
@@ -336,6 +417,9 @@ public class CustomerLocalDataScource implements CustomerDataSource{
                 String describe =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_DESCRIBE));
                 String inputDate =c.getString(c.getColumnIndexOrThrow(CustomerEntry.COLUMN_NAME_INPUTDATE));
                 Customer customer = new Customer(itemId, namea, phoneNumbera, desire,houseArea,describe,inputDate);
+
+                LogUtil.d("本地客户数据操作---- 查询客户日期 customer = "+customer.toString());
+
                 customers.add(customer);
             }
         }
@@ -343,7 +427,8 @@ public class CustomerLocalDataScource implements CustomerDataSource{
             c.close();
         }
 
-        db.close();
+        DatabaseManager.getInstance().closeDatabase();
+//        db.close();
 
         if (customers.isEmpty()) {
             // This will be called if the table is new or just empty.

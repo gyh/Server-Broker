@@ -63,9 +63,9 @@ public class UserInfoCase {
         String mobile = jsonObject.get("mobile").getAsString();
         String password = jsonObject.get("passwd").getAsString();
         String userName = "";
-        if(jsonObject.get("nickName").isJsonNull()){
+        if(jsonObject.has("nickName")&&jsonObject.get("nickName").isJsonNull()){
             userName = "";
-        }else {
+        }else if(jsonObject.has("nickName")){
             userName = jsonObject.get("nickName").getAsString();
         }
 

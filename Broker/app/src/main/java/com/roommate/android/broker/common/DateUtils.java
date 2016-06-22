@@ -33,8 +33,17 @@ public class DateUtils {
      * 获取当前时间
      * @return
      */
-    public static String getNewDate(){
+    public static String getNowTime(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return format.format(new Date());
+    }
+
+    /**
+     * 获取当前日期
+     * @return
+     */
+    public static String getToday(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(new Date());
     }
 }

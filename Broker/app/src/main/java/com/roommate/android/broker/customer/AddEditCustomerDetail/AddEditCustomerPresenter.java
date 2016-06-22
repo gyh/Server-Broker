@@ -4,8 +4,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.roommate.android.broker.customer.data.Customer;
+import com.roommate.android.broker.customer.data.RemoteOp;
 import com.roommate.android.broker.customer.data.source.CustomerDataSource;
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
+import com.roommate.android.broker.customer.data.source.RemoteOpDataSource;
+import com.roommate.android.broker.customer.data.source.RemoteOpRepository;
 import com.roommate.android.broker.customer.list.CustomerContract;
 
 import org.xutils.common.util.LogUtil;
@@ -18,6 +21,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class AddEditCustomerPresenter implements AddEditCustomerContract.Presenter ,CustomerDataSource.GetCustomerCallback{
 
 
+    private final RemoteOpRepository mRemoteOpRepository;
+
     @NonNull
     private final CustomerDataSource mCustomerRepository;
 
@@ -27,7 +32,8 @@ public class AddEditCustomerPresenter implements AddEditCustomerContract.Present
     @Nullable
     private final String mCustomerId;
 
-    public AddEditCustomerPresenter(@NonNull CustomerDataSource mCustomerRepository, @NonNull String mCustomerId, @NonNull AddEditCustomerContract.View mAddEditCustomerView) {
+    public AddEditCustomerPresenter(@NonNull CustomerDataSource mCustomerRepository, @NonNull String mCustomerId, @NonNull AddEditCustomerContract.View mAddEditCustomerView, RemoteOpRepository mRemoteOpRepository) {
+        this.mRemoteOpRepository = checkNotNull(mRemoteOpRepository);
         this.mAddEditCustomerView = checkNotNull(mAddEditCustomerView);
         this.mCustomerRepository = checkNotNull(mCustomerRepository);
         this.mCustomerId = mCustomerId;
@@ -47,6 +53,22 @@ public class AddEditCustomerPresenter implements AddEditCustomerContract.Present
         }else {
             mCustomerRepository.saveCustomer(customer);
             mAddEditCustomerView.showCustomersList();
+
+            //添加操作
+            String mopId = System.currentTimeMillis()+"";
+            RemoteOp remoteOp = new RemoteOp(mopId,RemoteOp.CUSTOMERDATA,RemoteOp.ADDOPT,customer.toString());
+            mRemoteOpRepository.saveRemoteOp(remoteOp, new RemoteOpDataSource.OpInfoCallback() {
+                @Override
+                public void onSuccess() {
+                    LogUtil.d("新增  --  添加操作成功");
+                }
+
+                @Override
+                public void onFail() {
+                    LogUtil.d("新增  --  添加操作失败");
+                }
+            });
+
         }
     }
 
@@ -64,6 +86,21 @@ public class AddEditCustomerPresenter implements AddEditCustomerContract.Present
         }else {
             mCustomerRepository.updataCustomer(customer);
             mAddEditCustomerView.showCustomersList();
+
+            //添加操作
+            String mopId = System.currentTimeMillis()+"";
+            RemoteOp remoteOp = new RemoteOp(mopId,RemoteOp.CUSTOMERDATA,RemoteOp.UPDOPT,customer.toString());
+            mRemoteOpRepository.saveRemoteOp(remoteOp, new RemoteOpDataSource.OpInfoCallback() {
+                @Override
+                public void onSuccess() {
+                    LogUtil.d("更新  --  添加操作成功");
+                }
+
+                @Override
+                public void onFail() {
+                    LogUtil.d("更新  --  添加操作失败");
+                }
+            });
         }
     }
 

@@ -96,7 +96,7 @@ public class CustomerListFragment extends Fragment implements CustomerContract.V
         smoothListView.setSmoothListViewListener(new SmoothListView.ISmoothListViewListener() {
             @Override
             public void onRefresh() {
-                smoothListView.setRefreshTime(DateUtils.getNewDate());
+                smoothListView.setRefreshTime(DateUtils.getNowTime());
                 smoothListView.postDelayed(new Runnable() {
                     @Override
                     public void run() {

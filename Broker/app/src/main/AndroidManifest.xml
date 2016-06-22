@@ -25,20 +25,13 @@
             android:theme="@style/Theme.AppStartLoad">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".BrokerActivity"
+        <activity android:name=".customer.list.BrokerActivity"
             android:screenOrientation="portrait"
             android:launchMode="standard">
-
-        </activity>
-
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
@@ -61,6 +54,25 @@
         <activity android:name=".customer.fitter.FitterCustomersActivity"
             android:screenOrientation="portrait"
             android:label="@string/activity_fitterdate"/>
+
+        <!--广播  开始  -->
+        <receiver android:name=".BrokerBroadcastReceiver">
+            <intent-filter android:priority="90000">
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <!--广播  结束  -->
+
+        <!--通知服务开始-->
+
+        <service android:name=".customer.push.PushCustomerService">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </service>
+
+        <!--通知服务结束-->
     </application>
 
 </manifest>

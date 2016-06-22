@@ -6,6 +6,8 @@ import android.content.res.Configuration;
 import android.os.Vibrator;
 
 import com.roommate.android.broker.common.PreferencesUtil;
+import com.roommate.android.broker.common.data.BrokerDbHelper;
+import com.roommate.android.broker.common.data.DatabaseManager;
 
 import org.xutils.BuildConfig;
 import org.xutils.HttpManager;
@@ -27,6 +29,9 @@ public class BrokerApplication extends Application {
         //xUtils初始化
         x.Ext.init(this);
         x.Ext.setDebug(true);
+
+        //数据库初始化
+        DatabaseManager.initializeInstance(BrokerDbHelper.initNintce(this));
 
         //初始化SharedPreference
         PreferencesUtil.initContext(this);
