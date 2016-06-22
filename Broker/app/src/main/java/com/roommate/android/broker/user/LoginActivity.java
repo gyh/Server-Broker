@@ -50,16 +50,16 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ApiContant.isDebug){
-                    Map map = new HashMap();
-                    map.put("id","12");
-                    map.put("mobile","13240125698");
-                    map.put("passwd","kdfjkdfj");
-                    UserInfoCase.saveUserInfo(new Gson().toJsonTree(map).getAsJsonObject());
-                    setResult(RESULT_OK);
-                    finish();
-                    return;
-                }
+//                if(ApiContant.isDebug){
+//                    Map map = new HashMap();
+//                    map.put("id","12");
+//                    map.put("mobile","13240125698");
+//                    map.put("passwd","kdfjkdfj");
+//                    UserInfoCase.saveUserInfo(new Gson().toJsonTree(map).getAsJsonObject());
+//                    setResult(RESULT_OK);
+//                    finish();
+//                    return;
+//                }
                 if(checkVaule()){
                     loginService();
                 }
@@ -96,7 +96,7 @@ public class LoginActivity extends BaseActivity {
         stringMap.put("passwd",password.getText().toString());
         String gson =  new Gson().toJson(stringMap);
 
-        params.addBodyParameter("Data",gson);
+        params.addBodyParameter(ApiContant.DATA,gson);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(final String result) {

@@ -20,8 +20,10 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -61,9 +63,9 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
         RequestParams params = new RequestParams(ApiContant.CUSTOMER_GETDATA_URL);
 
-        RemoteOp remoteOp = new RemoteOp(UserInfoCase.getUserId(),"","","");
-
-        String gson =  new Gson().toJson(remoteOp);
+        Map<String,String> stringMap = new HashMap<>();
+        stringMap.put("userId",UserInfoCase.getUserId());
+        String gson =  new Gson().toJson(stringMap);
 
         params.addBodyParameter(ApiContant.DATA,gson);
         x.http().post(params, new Callback.CommonCallback<String>() {
@@ -73,27 +75,22 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        ArrayList<Customer> strings = new ArrayList<>();
-                        JsonParser jsonParser = new JsonParser();
-                        JsonObject resultObj = jsonParser.parse(result).getAsJsonObject().get("result").getAsJsonObject();
-                        JsonArray rows = resultObj.get("rows").getAsJsonArray();
-                        for(int i=0;i<3;i++){
+//                        ArrayList<Customer> strings = new ArrayList<>();
+//                        JsonParser jsonParser = new JsonParser();
+//                        JsonObject resultObj = jsonParser.parse(result).getAsJsonObject().get("result").getAsJsonObject();
+//                        JsonArray rows = resultObj.get("rows").getAsJsonArray();
+//                        for(int i=0;i<rows.size();i++){
 //                        JsonObject row = rows.get(i).getAsJsonObject();
-                            Customer house = new Customer(System.currentTimeMillis()+"",
-                                    "郭跃华"+i,
-                                    "13240123693",
-                                    "3",
-                                    "90",
-                                    "客户描述经典款了房间里的康师傅几点睡了开发就考虑到",
-                                    "2016-9-11");
-                            strings.add(house);
-                            try {
-                                Thread.sleep(1);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        callback.onCustomersLoader(strings);
+//                            Customer house = new Customer();
+//                            strings.add(house);
+//                            try {
+//                                Thread.sleep(1);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                        callback.onCustomersLoader(strings);
+                        callback.onDataNotAvailable();
                     }
                 }).start();
             }

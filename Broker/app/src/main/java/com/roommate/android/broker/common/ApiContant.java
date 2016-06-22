@@ -7,18 +7,17 @@ public class ApiContant {
 
     public static boolean isDebug = true;
 
-    public static final String BASE_URL = "http://broker.applinzi.com";
-
+    public static final String BASE_URL = "http://120.27.7.127:8080";
 
     public static final String DATA = "Data";
 
-    public static String LOGIN_URL="/user/login";
+    public static String LOGIN_URL="/customer/user/login";
 
-    public static String REGISTER_URL = "/user/register";
+    public static String REGISTER_URL = "/customer/user/register";
 
-    public static String CUSTOMER_SYNDATA_URL="/cutomer/synDada";
+    public static String CUSTOMER_SYNDATA_URL="/customer/cutomer/synDada";
 
-    public static String CUSTOMER_GETDATA_URL="/cutomer/getData";
+    public static String CUSTOMER_GETDATA_URL="/customer/cutomer/getData";
 
     static {
         if(isDebug){
