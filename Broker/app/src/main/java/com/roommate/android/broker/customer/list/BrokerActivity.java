@@ -24,6 +24,7 @@ import com.roommate.android.broker.customer.searchCustomer.SearchCustomerActivit
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
 import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
 import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
+import com.roommate.android.broker.user.SettingActivity;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -179,7 +180,7 @@ public class BrokerActivity extends BaseActivity{
                                 postDelay(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startActivity(new Intent(BrokerActivity.this,AboutActivity.class));
+                                        startActivity(new Intent(BrokerActivity.this,SettingActivity.class));
                                     }
                                 }, 1000);
 
