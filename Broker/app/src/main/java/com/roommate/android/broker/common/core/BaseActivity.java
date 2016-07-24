@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.baidu.mobstat.StatService;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.user.UserInfoCase;
@@ -63,6 +64,19 @@ public abstract class BaseActivity extends AppCompatActivity{
             startActivityForResult(intent,LOGIN_REQUEST);
             return;
         }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 
     /**

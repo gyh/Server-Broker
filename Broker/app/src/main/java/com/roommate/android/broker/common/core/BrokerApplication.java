@@ -21,10 +21,13 @@ public class BrokerApplication extends Application {
 
     public Vibrator mVibrator;
 
+    private static Application application;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        application = this;
 
         //xUtils初始化
         x.Ext.init(this);
@@ -61,5 +64,9 @@ public class BrokerApplication extends Application {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    public static Application getApplication() {
+        return application;
     }
 }

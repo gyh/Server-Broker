@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    >
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/viewToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        <!--<include layout="@layout/my_toolbar"/>-->
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Toolbar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/app_background"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/view_bg_fill_white_default">
+
+            <EditText
+                android:id="@+id/input_old_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/app_white"
+                android:hint="@string/pwd_hint_old"
+                android:textSize="14sp"
+                android:paddingLeft="16dp"
+                android:singleLine="true"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_line_backgroud"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
+
+            <EditText
+                android:id="@+id/input_new_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/app_white"
+                android:hint="@string/pwd_hint_new"
+                android:textSize="14sp"
+                android:paddingLeft="16dp"
+                android:singleLine="true"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_line_backgroud"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
+
+            <EditText
+                android:id="@+id/input_new_pwd_two"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/app_white"
+                android:hint="@string/pwd_hint_new_two"
+                android:textSize="14sp"
+                android:paddingLeft="16dp"
+                android:singleLine="true"/>
+
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_pwd"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_pwd"
+            style="@style/Mybutton_fill_big"/>
+    </LinearLayout>
+
+</LinearLayout>

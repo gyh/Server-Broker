@@ -50,16 +50,6 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(ApiContant.isDebug){
-//                    Map map = new HashMap();
-//                    map.put("id","12");
-//                    map.put("mobile","13240125698");
-//                    map.put("passwd","kdfjkdfj");
-//                    UserInfoCase.saveUserInfo(new Gson().toJsonTree(map).getAsJsonObject());
-//                    setResult(RESULT_OK);
-//                    finish();
-//                    return;
-//                }
                 if(checkVaule()){
                     loginService();
                 }

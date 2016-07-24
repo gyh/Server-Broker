@@ -20,9 +20,9 @@
     <item android:state_enabled="false"
         android:drawable="@color/app_white" />
     <item android:state_pressed="true"
-        android:drawable="@color/app_background" />
+        android:drawable="@color/toolbar_background" />
     <item android:state_focused="true" android:state_enabled="true"
-        android:drawable="@color/app_background" />
+        android:drawable="@color/toolbar_background" />
     <item android:state_enabled="true"
         android:drawable="@color/app_white" />
     <item

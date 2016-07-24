@@ -9,10 +9,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
-import com.roommate.android.broker.AboutActivity;
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.ActivityUtils;
 import com.roommate.android.broker.common.DateUtils;
@@ -24,7 +26,10 @@ import com.roommate.android.broker.customer.searchCustomer.SearchCustomerActivit
 import com.roommate.android.broker.customer.data.source.CustomerRepository;
 import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
 import com.roommate.android.broker.customer.data.source.remote.CustomerRemoteDataSource;
+import com.roommate.android.broker.user.LoginActivity;
+import com.roommate.android.broker.user.ModPwdActivity;
 import com.roommate.android.broker.user.SettingActivity;
+import com.roommate.android.broker.user.UserInfoCase;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,9 +37,14 @@ import java.util.Date;
 
 /**
  * Created by GYH on 2016/5/28.
+ *
+ * 自己实现更新
+ *
  */
-public class BrokerActivity extends BaseActivity{
+public class BrokerActivity extends BaseActivity {
 
+    private final int SETTNG_REQUEST_CODE = 100;
+    private final int MODPWD_REQUEST_CODE = 200;
     //时间选择器
     private TimePickerView pvTime;
 
@@ -42,7 +52,8 @@ public class BrokerActivity extends BaseActivity{
 
     private DrawerLayout mDrawerLayout;
 
-    private TextView tvUserName;
+    private TextView userName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +65,8 @@ public class BrokerActivity extends BaseActivity{
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
-
-
-
         //初始化时间选择
         initOrderDate();
-
         // Set up the navigation drawer.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
@@ -81,7 +88,7 @@ public class BrokerActivity extends BaseActivity{
                 CustomerLocalDataScource.getInstance(getApplicationContext())),
                 customerListFragment, RemoteOpRepository.getInstance(RemoteOpRemoteDataScource.getInstance(),
                 RemoteOpLocalDataScource.getInstance(getApplicationContext())));
-        tvUserName = (TextView) findViewById(R.id.tv_userName);
+
 
     }
 
@@ -93,6 +100,14 @@ public class BrokerActivity extends BaseActivity{
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(userName!=null){
+            userName.setText(UserInfoCase.getNickName());
+        }
     }
 
     @Override
@@ -109,6 +124,13 @@ public class BrokerActivity extends BaseActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SETTNG_REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                Intent intent = new Intent();
+                intent.setClass(this, LoginActivity.class);
+                startActivityForResult(intent,LOGIN_REQUEST);
+            }
+        }
     }
 
     @Override
@@ -162,6 +184,13 @@ public class BrokerActivity extends BaseActivity{
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+
+        navigationView.inflateHeaderView(R.layout.nav_header);
+
+        View headView = navigationView.getHeaderView(0);
+        userName = (TextView) headView.findViewById(R.id.tv_userName);
+        userName.setText(UserInfoCase.getNickName());
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -172,6 +201,13 @@ public class BrokerActivity extends BaseActivity{
 
                                 mDrawerLayout.closeDrawers();
 
+                                postDelay(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivityForResult(new Intent(BrokerActivity.this,ModPwdActivity.class),MODPWD_REQUEST_CODE);
+                                    }
+                                },500);
+
                                 break;
                             case R.id.statistics_navigation_menu_item:
                                 //
@@ -180,9 +216,9 @@ public class BrokerActivity extends BaseActivity{
                                 postDelay(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startActivity(new Intent(BrokerActivity.this,SettingActivity.class));
+                                        startActivityForResult(new Intent(BrokerActivity.this,SettingActivity.class),SETTNG_REQUEST_CODE);
                                     }
-                                }, 1000);
+                                }, 500);
 
                                 break;
                             default:

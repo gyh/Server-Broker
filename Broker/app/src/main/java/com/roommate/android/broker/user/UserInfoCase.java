@@ -69,12 +69,16 @@ public class UserInfoCase {
             userName = jsonObject.get("nickName").getAsString();
         }
 
-        UserInfo userInfo = new UserInfo(userId,userName,password,userName);
+        UserInfo userInfo = new UserInfo(userId,userName,password,mobile);
         try {
             PreferencesUtil.setAttr(USER_KEY,PreferencesUtil.serialize(userInfo));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void clearUserInfo(){
+        PreferencesUtil.setAttr(USER_KEY,"");
     }
 
     /**

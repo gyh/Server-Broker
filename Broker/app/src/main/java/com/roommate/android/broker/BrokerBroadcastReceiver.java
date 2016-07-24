@@ -28,7 +28,7 @@ public class BrokerBroadcastReceiver extends BroadcastReceiver{
             LogUtil.d("锁屏------");
         } else if (Intent.ACTION_USER_PRESENT.equals(action)) { // 解锁
             LogUtil.d("解锁------");
-            if(!AppUtils.isServiceRunning(context,"com.roommate.android.broker.customer.push.PushCustomerService")){
+            if(!AppUtils.isServiceRunning("com.roommate.android.broker.customer.push.PushCustomerService")){
                 Intent intent1 = new Intent();
                 intent1.setClass(context,PushCustomerService.class);
                 context.startService(intent1);

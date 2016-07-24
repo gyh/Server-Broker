@@ -1,20 +1,16 @@
-package com.roommate.android.broker;
+package com.roommate.android.broker.user;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
+import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.core.BaseActivity;
 
-import java.io.UnsupportedEncodingException;
-
 /**
- * Created by GYH on 2016/5/30.
+ * Created by GYH on 2016/7/10.
  */
-public class AboutActivity extends BaseActivity{
+public class ModPwdActivity extends BaseActivity{
 
 
     @Override
@@ -27,16 +23,10 @@ public class AboutActivity extends BaseActivity{
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_about;
-    }
-
-    @Override
-    protected boolean needLogin() {
-        return false;
+        return R.layout.activity_modpwd;
     }
 }

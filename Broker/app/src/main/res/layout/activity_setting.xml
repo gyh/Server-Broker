@@ -25,19 +25,19 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="60dp"
-
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
+        android:id="@+id/tvVersionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="13sp"
-        android:text=""/>
+        android:text="1.0.0"/>
 
     <RelativeLayout
+        android:id="@+id/viewByFunction"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
@@ -64,6 +64,7 @@
         android:layout_height="0.5dp"
         android:background="@color/app_line_backgroud"/>
     <RelativeLayout
+        android:id="@+id/viewbyHelp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/item_bg_fill">
@@ -89,6 +90,7 @@
         android:layout_height="0.5dp"
         android:background="@color/app_line_backgroud"/>
     <RelativeLayout
+        android:id="@+id/viewByAbout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/item_bg_fill">
@@ -114,6 +116,7 @@
         android:layout_height="0.5dp"
         android:background="@color/app_line_backgroud"/>
     <RelativeLayout
+        android:id="@+id/viewByCheck"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/item_bg_fill">
@@ -131,6 +134,7 @@
         android:layout_height="0.5dp"
         android:background="@color/app_line_backgroud"/>
     <RelativeLayout
+        android:id="@+id/viewByLoginOut"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/item_bg_fill">
