@@ -125,4 +125,9 @@
         <item name="apTabPaddingTopBottom">4dp</item>
         <item name="apTabTextSelectColor">@color/app_theme_color</item>
     </style>
+
+    <style name="dialogWindowAnim" parent="android:Animation" mce_bogus="1">
+        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out</item>
+    </style>
 </resources>

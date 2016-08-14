@@ -2,11 +2,14 @@ package com.roommate.android.broker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
+import com.roommate.android.broker.common.dialog.UpdataDialogFragment;
 import com.roommate.android.broker.customer.list.BrokerActivity;
 
 /**
@@ -37,7 +40,13 @@ public class WelcomeActivity extends AppCompatActivity{
         StatService.setSendLogStrategy(this, SendStrategyEnum.SET_TIME_INTERVAL, 1, false);
         // 调试百度统计SDK的Log开关，可以在Eclipse中看到sdk打印的日志，发布时去除调用，或者设置为false
         StatService.setDebugOn(true);
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                UpdataDialogFragment updataDialogFragment = UpdataDialogFragment.newIntance(true);
+//                updataDialogFragment.show(getSupportFragmentManager(),UpdataDialogFragment.TAG);
+            }
+        }, 2000);
     }
 
     @Override

@@ -104,7 +104,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         LogUtil.d("本地客户数据操作---- 获取客户  customerId =  "+ customerId);
 
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
 
@@ -159,7 +158,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         LogUtil.d("本地客户数据操作---- 保存  customer =  "+ customer.toString());
 
         checkNotNull(customer);
-//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
@@ -177,8 +175,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         LogUtil.d("本地客户数据操作---- 保存 成功 ");
 
         DatabaseManager.getInstance().closeDatabase();
-
-//        db.close();
     }
 
     @Override
@@ -188,7 +184,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         LogUtil.d("本地客户数据操作---- 更新客户  customer = "+customer.toString() );
 
-//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
@@ -209,7 +204,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         DatabaseManager.getInstance().closeDatabase();
 
-//        db.close();
     }
 
     @Override
@@ -222,7 +216,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         LogUtil.d("本地客户数据操作---- 删除所有客户");
 
-//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
@@ -230,7 +223,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         DatabaseManager.getInstance().closeDatabase();
 
-//        db.close();
     }
 
     @Override
@@ -239,8 +231,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         checkNotNull(customerId);
 
         LogUtil.d("本地客户数据操作---- 删除客户 customerId = "+customerId);
-
-//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
@@ -253,7 +243,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         DatabaseManager.getInstance().closeDatabase();
 
-//        db.close();
     }
 
     @Override
@@ -264,8 +253,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         LogUtil.d("本地客户数据操作---- 查询客户手机号 phoneNumber = "+phoneNumber);
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
-
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
                 CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
@@ -307,8 +294,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         DatabaseManager.getInstance().closeDatabase();
 
-//        db.close();
-
         if (customers.isEmpty()) {
             // This will be called if the table is new or just empty.
             callback.onDataNotAvailable();
@@ -325,8 +310,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         LogUtil.d("本地客户数据操作---- 查询客户姓名 name = "+name);
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
-
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
                 CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
@@ -368,7 +351,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         DatabaseManager.getInstance().closeDatabase();
 
-//        db.close();
 
         if (customers.isEmpty()) {
             // This will be called if the table is new or just empty.
@@ -387,7 +369,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
 
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
                 CustomerEntry.COLUMN_NAME_CUSTOMER_ID,
@@ -428,7 +409,6 @@ public class CustomerLocalDataScource implements CustomerDataSource{
         }
 
         DatabaseManager.getInstance().closeDatabase();
-//        db.close();
 
         if (customers.isEmpty()) {
             // This will be called if the table is new or just empty.

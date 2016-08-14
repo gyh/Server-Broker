@@ -6,14 +6,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.roommate.android.broker.common.data.BrokerDbHelper;
 import com.roommate.android.broker.common.data.DatabaseManager;
+import com.roommate.android.broker.customer.CustomerSo;
+import com.roommate.android.broker.customer.data.Customer;
 import com.roommate.android.broker.customer.data.RemoteOp;
 import com.roommate.android.broker.customer.data.source.RemoteOpDataSource;
 import com.roommate.android.broker.common.data.BrokerPersistenceContract.RemoteOpEntry;
 
 import org.xutils.common.util.LogUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +31,9 @@ public class RemoteOpLocalDataScource implements RemoteOpDataSource {
 
     private static RemoteOpLocalDataScource INSTANCE;
 
-//    private BrokerDbHelper mDbHelper;
 
-    // Prevent direct instantiation.
     private RemoteOpLocalDataScource(@NonNull Context context) {
         checkNotNull(context);
-//        mDbHelper = BrokerDbHelper.initNintce(context);
     }
 
     public static RemoteOpLocalDataScource getInstance(@NonNull Context context) {
@@ -56,8 +58,6 @@ public class RemoteOpLocalDataScource implements RemoteOpDataSource {
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openReadDatabase();
 
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         String[] projection = {
                 RemoteOpEntry.COLUMN_NAME_OP_ID,
                 RemoteOpEntry.COLUMN_NAME_OP_DATA_TYPE,
@@ -69,12 +69,23 @@ public class RemoteOpLocalDataScource implements RemoteOpDataSource {
                 RemoteOpEntry.TABLE_NAME, projection, null, null, null, null, null);
 
         if (c != null && c.getCount() > 0) {
+            Gson gson = new Gson();
             while (c.moveToNext()) {
                 String opId = c.getString(c.getColumnIndexOrThrow(RemoteOpEntry.COLUMN_NAME_OP_ID));
                 String opDataType =c.getString(c.getColumnIndexOrThrow(RemoteOpEntry.COLUMN_NAME_OP_DATA_TYPE));
                 String opType =c.getString(c.getColumnIndexOrThrow(RemoteOpEntry.COLUMN_NAME_OP_TYPE));
-                String details =c.getString(c.getColumnIndexOrThrow(RemoteOpEntry.COLUMN_NAME_OP_DETAILS));
-                RemoteOp remoteOp = new RemoteOp(opId,opDataType,opType,details);
+                String opdata =c.getString(c.getColumnIndexOrThrow(RemoteOpEntry.COLUMN_NAME_OP_DETAILS));
+                CustomerSo customer = gson.fromJson(opdata,CustomerSo.class);
+                String namestr = customer.getName();
+                try {
+                    namestr = URLEncoder.encode(namestr,"utf-8");
+                    customer.setName(namestr);
+                }catch (Exception e){
+
+                }
+                String datestr = customer.getAppointTime()+":00";
+                customer.setAppointTime(datestr);
+                RemoteOp remoteOp = new RemoteOp(opId,opDataType,opType,customer);
 
                 LogUtil.d("本地数据操作 获取所有操作列表---" + remoteOp.toString());
 
@@ -86,8 +97,6 @@ public class RemoteOpLocalDataScource implements RemoteOpDataSource {
         }
 
         DatabaseManager.getInstance().closeDatabase();
-//        db.close();
-
         if (remoteOps.isEmpty()) {
             // This will be called if the table is new or just empty.
             callback.onDataNotAvailable();
@@ -107,13 +116,11 @@ public class RemoteOpLocalDataScource implements RemoteOpDataSource {
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
-//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(RemoteOpEntry.COLUMN_NAME_OP_ID, remoteOp.getOpId());
         values.put(RemoteOpEntry.COLUMN_NAME_OP_DATA_TYPE, remoteOp.getOptObject());
         values.put(RemoteOpEntry.COLUMN_NAME_OP_TYPE, remoteOp.getOptType());
-        values.put(RemoteOpEntry.COLUMN_NAME_OP_DETAILS, remoteOp.getOptData());
+        values.put(RemoteOpEntry.COLUMN_NAME_OP_DETAILS, remoteOp.getOptData().toString());
 
         liteDatabase.insert(RemoteOpEntry.TABLE_NAME, null, values);
 
@@ -121,15 +128,12 @@ public class RemoteOpLocalDataScource implements RemoteOpDataSource {
 
         DatabaseManager.getInstance().closeDatabase();
 
-//        db.close();
     }
 
     @Override
     public void deleteRemoteOps(OpInfoCallback opInfoCallback) {
 
         LogUtil.d("本地数据操作 删除操作数据");
-
-//        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         SQLiteDatabase liteDatabase = DatabaseManager.getInstance().openWritableDatabase();
 
@@ -139,7 +143,7 @@ public class RemoteOpLocalDataScource implements RemoteOpDataSource {
 
         DatabaseManager.getInstance().closeDatabase();
 
-//        db.close();
+        opInfoCallback.onSuccess();
     }
 
     @Override

@@ -2,13 +2,16 @@ package com.roommate.android.broker.customer.data.source.remote;
 
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.roommate.android.broker.common.ApiContant;
 import com.roommate.android.broker.common.JsonUtils;
+import com.roommate.android.broker.customer.CustomerSo;
 import com.roommate.android.broker.customer.data.RemoteOp;
 import com.roommate.android.broker.user.UserInfoCase;
 import com.roommate.android.broker.customer.data.Customer;
@@ -72,27 +75,43 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
             @Override
             public void onSuccess(final String result) {
                 LogUtil.d("线上客户数据 获取线上全部数据  result = "+ result);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        ArrayList<Customer> strings = new ArrayList<>();
-//                        JsonParser jsonParser = new JsonParser();
-//                        JsonObject resultObj = jsonParser.parse(result).getAsJsonObject().get("result").getAsJsonObject();
-//                        JsonArray rows = resultObj.get("rows").getAsJsonArray();
-//                        for(int i=0;i<rows.size();i++){
-//                        JsonObject row = rows.get(i).getAsJsonObject();
-//                            Customer house = new Customer();
-//                            strings.add(house);
-//                            try {
-//                                Thread.sleep(1);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        callback.onCustomersLoader(strings);
+                if(TextUtils.isEmpty(result)){
+                    callback.onDataNotAvailable();
+                }else {
+                    if(JsonUtils.isResultSuccess(result)){
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ArrayList<Customer> strings = new ArrayList<>();
+                                JsonParser jsonParser = new JsonParser();
+                                JsonElement jsonElement = jsonParser.parse(result);
+                                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                                JsonArray rows = jsonObject.get("data").getAsJsonArray();
+                                for(int i=0;i<rows.size();i++){
+                                    JsonObject row = rows.get(i).getAsJsonObject();
+                                    CustomerSo customerSo = new Gson().fromJson(row,CustomerSo.class);
+                                    Customer house = new Customer(
+                                            customerSo.getId(),
+                                            customerSo.getName(),
+                                            customerSo.getMobile(),
+                                            customerSo.getBuyPower()+"",
+                                            customerSo.getHouseArea(),
+                                            customerSo.getRemark(),
+                                            customerSo.getAppointTime());
+                                    strings.add(house);
+                                    try {
+                                        Thread.sleep(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                callback.onCustomersLoader(strings);
+                            }
+                        }).start();
+                    }else {
                         callback.onDataNotAvailable();
                     }
-                }).start();
+                }
             }
 
             @Override

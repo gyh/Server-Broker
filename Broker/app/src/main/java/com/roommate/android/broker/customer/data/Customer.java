@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.google.common.base.Objects;
 import com.google.gson.Gson;
+import com.roommate.android.broker.customer.CustomerSo;
 import com.roommate.android.broker.user.UserInfoCase;
 
 import java.util.Date;
@@ -120,83 +121,20 @@ public final class Customer {
         customer.setHouseArea(houseArea);
         customer.setName(name);
         customer.setUserId(Long.valueOf(UserInfoCase.getUserId()));
+        customer.setRemark(describe);
         return new Gson().toJson(customer);
     }
 
-    class CustomerSo {
-
-        private String id;
-
-        private Long userId;
-
-        private String name;
-        /**
-         * 电话
-         */
-        private String mobile;
-
-        /**
-         * 创建时间
-         */
-        private Date createTime;
-
-        /**
-         * 客户类型：0买房子 1卖房子
-         */
-        private Integer customerType;
-
-        /**
-         * 是否删除 0没删除，1：逻辑删除
-         */
-        private Integer isdelete;
-
-        /**
-         * 购买需求
-         */
-        private String buyDemand;
-
-        /**
-         * 购买欲望强度，1-12个月 越高欲望越大
-         */
-        private Integer buyPower;
-
-        /**
-         * 房屋面积
-         */
-        private String houseArea;
-
-        /**
-         * 预约时间
-         */
-        private String appointTime;
-
-
-        public void setAppointTime(String appointTime) {
-            this.appointTime = appointTime;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public void setUserId(Long userId) {
-            this.userId = userId;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
-        }
-
-        public void setBuyPower(Integer buyPower) {
-            this.buyPower = buyPower;
-        }
-
-        public void setHouseArea(String houseArea) {
-            this.houseArea = houseArea;
-        }
+    public CustomerSo toCustomerSo(){
+        CustomerSo customer = new CustomerSo();
+        customer.setId(mId);
+        customer.setMobile(phoneNumber);
+        customer.setAppointTime(inputDate);
+        customer.setBuyPower(Integer.valueOf(desire));
+        customer.setHouseArea(houseArea);
+        customer.setName(name);
+        customer.setUserId(Long.valueOf(UserInfoCase.getUserId()));
+        return customer;
     }
+
 }

@@ -3,6 +3,7 @@ package com.roommate.android.broker.customer.AddEditCustomerDetail;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.roommate.android.broker.customer.CustomerSo;
 import com.roommate.android.broker.customer.data.Customer;
 import com.roommate.android.broker.customer.data.RemoteOp;
 import com.roommate.android.broker.customer.data.source.CustomerDataSource;
@@ -21,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class AddEditCustomerPresenter implements AddEditCustomerContract.Presenter ,CustomerDataSource.GetCustomerCallback{
 
 
-    private final RemoteOpRepository mRemoteOpRepository;
+    private final RemoteOpDataSource mRemoteOpRepository;
 
     @NonNull
     private final CustomerDataSource mCustomerRepository;
@@ -56,7 +57,7 @@ public class AddEditCustomerPresenter implements AddEditCustomerContract.Present
 
             //添加操作
             String mopId = System.currentTimeMillis()+"";
-            RemoteOp remoteOp = new RemoteOp(mopId,RemoteOp.CUSTOMERDATA,RemoteOp.ADDOPT,customer.toString());
+            RemoteOp remoteOp = new RemoteOp(mopId,RemoteOp.CUSTOMERDATA,RemoteOp.ADDOPT,customer.toCustomerSo());
             mRemoteOpRepository.saveRemoteOp(remoteOp, new RemoteOpDataSource.OpInfoCallback() {
                 @Override
                 public void onSuccess() {
@@ -89,7 +90,8 @@ public class AddEditCustomerPresenter implements AddEditCustomerContract.Present
 
             //添加操作
             String mopId = System.currentTimeMillis()+"";
-            RemoteOp remoteOp = new RemoteOp(mopId,RemoteOp.CUSTOMERDATA,RemoteOp.UPDOPT,customer.toString());
+
+            RemoteOp remoteOp = new RemoteOp(mopId,RemoteOp.CUSTOMERDATA,RemoteOp.UPDOPT,customer.toCustomerSo());
             mRemoteOpRepository.saveRemoteOp(remoteOp, new RemoteOpDataSource.OpInfoCallback() {
                 @Override
                 public void onSuccess() {

@@ -28,11 +28,12 @@
         android:layout_centerInParent="true"
         android:textColor="@color/app_theme_color"
         android:textSize="20sp"
-        android:elevation="5dp"/>
+        android:elevation="5dp"
+        android:visibility="gone"/>
 
     <WebView
         android:layout_below="@id/viewToolbar"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></WebView>

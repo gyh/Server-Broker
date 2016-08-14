@@ -11,6 +11,9 @@ import org.xutils.common.util.LogUtil;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -74,7 +77,6 @@ public class RemoteOpRemoteDataScource implements RemoteOpDataSource {
         LogUtil.d("线上操作数据  同步数据 gson = " + gson);
 
         params.addBodyParameter(ApiContant.DATA,gson);
-
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(final String result) {

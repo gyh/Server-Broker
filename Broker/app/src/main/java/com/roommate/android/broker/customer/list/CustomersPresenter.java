@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import com.roommate.android.broker.common.ApiContant;
 import com.roommate.android.broker.common.DateUtils;
 import com.roommate.android.broker.common.PreferencesUtil;
+import com.roommate.android.broker.customer.CustomerSo;
 import com.roommate.android.broker.customer.data.Customer;
 import com.roommate.android.broker.customer.data.RemoteOp;
 import com.roommate.android.broker.customer.data.source.CustomerDataSource;
@@ -47,7 +48,7 @@ public class CustomersPresenter implements CustomerContract.Presenter {
 
     private final RemoteOpRepository mRemoteOpRepository;
 
-    private final CustomerRepository mCustomerRepository;
+    private final CustomerDataSource mCustomerRepository;
 
     private final CustomerContract.View mCustomersView;
 
@@ -216,7 +217,10 @@ public class CustomersPresenter implements CustomerContract.Presenter {
 
         //添加操作
         String mId = System.currentTimeMillis()+"";
-        RemoteOp remoteOp = new RemoteOp(mId,RemoteOp.CUSTOMERDATA,RemoteOp.DELOPT,customerId);
+        CustomerSo customerSo = new CustomerSo();
+        customerSo.setId(customerId);
+        customerSo.setUserId(Long.valueOf(UserInfoCase.getUserId()));
+        RemoteOp remoteOp = new RemoteOp(mId,RemoteOp.CUSTOMERDATA,RemoteOp.DELOPT,customerSo);
         mRemoteOpRepository.saveRemoteOp(remoteOp, new RemoteOpDataSource.OpInfoCallback() {
             @Override
             public void onSuccess() {

@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'org.eclipse.jetty:jetty-server:9.3.0.M2'
+    compile 'org.jsoup:jsoup:1.8.1'
+
+    compile('junit:junit:4.11') {
+        exclude module: 'hamcrest-core'
+    }
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile "org.json:json:20140107"
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

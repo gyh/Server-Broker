@@ -7,16 +7,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.roommate.android.broker.AboutActivity;
 import com.roommate.android.broker.R;
 import com.roommate.android.broker.common.AppUtils;
 import com.roommate.android.broker.common.DialogUtils;
 import com.roommate.android.broker.common.core.BaseActivity;
+import com.roommate.android.broker.customer.data.source.CustomerDataSource;
+import com.roommate.android.broker.customer.data.source.RemoteOpDataSource;
+import com.roommate.android.broker.customer.data.source.local.CustomerLocalDataScource;
+import com.roommate.android.broker.customer.data.source.local.RemoteOpLocalDataScource;
 
 /**
  * Created by GYH on 2016/7/4.
  */
 public class SettingActivity extends BaseActivity{
 
+
+    private final String FUNCATION_URL = "http://120.27.7.127:8080/introduction/functionIntroduction.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,7 @@ public class SettingActivity extends BaseActivity{
         findViewById(R.id.viewByFunction).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AboutActivity.startAbout(SettingActivity.this,FUNCATION_URL);
             }
         });
         findViewById(R.id.viewByAbout).setOnClickListener(new View.OnClickListener() {
@@ -58,6 +65,20 @@ public class SettingActivity extends BaseActivity{
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 UserInfoCase.clearUserInfo();
+                                RemoteOpDataSource remoteOpDataSource =  RemoteOpLocalDataScource.getInstance(SettingActivity.this);
+                                remoteOpDataSource.deleteRemoteOps(new RemoteOpDataSource.OpInfoCallback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onFail() {
+
+                                    }
+                                });
+                                CustomerDataSource customerDataSource = CustomerLocalDataScource.getInstance(SettingActivity.this);
+                                customerDataSource.deleteAllCustomers();
                                 setResult(RESULT_OK);
                                 finish();
                             }

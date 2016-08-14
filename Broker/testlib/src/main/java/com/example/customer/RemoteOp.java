@@ -1,6 +1,4 @@
-package com.roommate.android.broker.customer.data;
-
-import com.roommate.android.broker.customer.CustomerSo;
+package com.example.customer;
 
 /**
  * Created by GYH on 2016/5/28.

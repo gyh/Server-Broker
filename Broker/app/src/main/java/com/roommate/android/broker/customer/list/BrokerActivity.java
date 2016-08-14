@@ -171,6 +171,7 @@ public class BrokerActivity extends BaseActivity {
         pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
         pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR)+2);
         pvTime.setTime(new Date());
+        pvTime.setTitle(getResources().getString(R.string.filter_date));
         pvTime.setCyclic(false);
         pvTime.setCancelable(true);
         //时间选择后回调
@@ -224,9 +225,6 @@ public class BrokerActivity extends BaseActivity {
                             default:
                                 break;
                         }
-                        // Close the navigation drawer when an item is selected.
-//                        menuItem.setChecked(true);
-
                         return true;
                     }
                 });
