@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.roommate.android.broker.customer.CustomerSo;
 import com.roommate.android.broker.user.UserInfoCase;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -43,6 +44,8 @@ public final class Customer {
         this.desire = desire;
         this.houseArea = houseArea;
         this.describe = describe;
+
+
         this.inputDate = inputDate;
     }
 

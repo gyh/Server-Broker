@@ -25,6 +25,8 @@ public class SettingActivity extends BaseActivity{
 
     private final String FUNCATION_URL = "http://120.27.7.127:8080/introduction/functionIntroduction.html";
 
+    private final String ABOUTOUR_URL = "http://120.27.7.127:8080/introduction/aboutOur.html";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class SettingActivity extends BaseActivity{
         findViewById(R.id.viewByAbout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AboutActivity.startAbout(SettingActivity.this,ABOUTOUR_URL);
             }
         });
         findViewById(R.id.viewbyHelp).setOnClickListener(new View.OnClickListener() {
@@ -65,6 +67,7 @@ public class SettingActivity extends BaseActivity{
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 UserInfoCase.clearUserInfo();
+
                                 RemoteOpDataSource remoteOpDataSource =  RemoteOpLocalDataScource.getInstance(SettingActivity.this);
                                 remoteOpDataSource.deleteRemoteOps(new RemoteOpDataSource.OpInfoCallback() {
                                     @Override

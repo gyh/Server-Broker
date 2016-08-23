@@ -9,6 +9,9 @@ import com.roommate.android.broker.customer.data.source.RemoteOpDataSource;
 import org.xutils.common.Callback;
 import org.xutils.common.util.LogUtil;
 import org.xutils.http.RequestParams;
+import org.xutils.http.app.DefaultParamsBuilder;
+import org.xutils.http.app.HttpRetryHandler;
+import org.xutils.http.app.ParamsBuilder;
 import org.xutils.x;
 
 import java.io.UnsupportedEncodingException;
@@ -69,7 +72,6 @@ public class RemoteOpRemoteDataScource implements RemoteOpDataSource {
         checkNotNull(opInfoCallback);
 
         LogUtil.d("线上操作数据  同步数据 remoteOps.size = " + remoteOps.size());
-
         RequestParams params = new RequestParams(ApiContant.CUSTOMER_SYNDATA_URL);
 
         String gson =  new Gson().toJson(remoteOps);
@@ -83,7 +85,11 @@ public class RemoteOpRemoteDataScource implements RemoteOpDataSource {
 
                 LogUtil.d("线上操作数据  同步数据 result = " + result);
 
-                LogUtil.d("synCustomer(result):  "+result);
+                try {
+                    LogUtil.d("synCustomer(result):  "+URLEncoder.encode(result,"utf-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 if(JsonUtils.isResultSuccess(result)){
                     opInfoCallback.onSuccess();
                 }else {

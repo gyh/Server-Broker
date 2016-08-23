@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -64,6 +65,7 @@ public class AboutActivity extends BaseActivity{
 
         webView.setWebViewClient(wvc);
 
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         webView.loadUrl(URL);
 

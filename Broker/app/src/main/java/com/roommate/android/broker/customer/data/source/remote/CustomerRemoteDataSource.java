@@ -22,10 +22,13 @@ import org.xutils.common.util.LogUtil;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -42,6 +45,7 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
 
     private static CustomerRemoteDataSource INSTANCE;
 
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.getDefault());
 
     // Prevent direct instantiation.
     private CustomerRemoteDataSource() {}
@@ -90,6 +94,7 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
                                 for(int i=0;i<rows.size();i++){
                                     JsonObject row = rows.get(i).getAsJsonObject();
                                     CustomerSo customerSo = new Gson().fromJson(row,CustomerSo.class);
+                                    String date = sdf.format(new Date(Long.valueOf(customerSo.getAppointTime())));
                                     Customer house = new Customer(
                                             customerSo.getId(),
                                             customerSo.getName(),
@@ -97,7 +102,7 @@ public class CustomerRemoteDataSource implements CustomerDataSource{
                                             customerSo.getBuyPower()+"",
                                             customerSo.getHouseArea(),
                                             customerSo.getRemark(),
-                                            customerSo.getAppointTime());
+                                            date);
                                     strings.add(house);
                                     try {
                                         Thread.sleep(1);

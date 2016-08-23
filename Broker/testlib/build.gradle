@@ -11,6 +11,8 @@ dependencies {
     }
     compile 'com.google.code.gson:gson:2.2.4'
     compile "org.json:json:20140107"
+
+    compile 'org.xutils:xutils:3.3.34'
 }
 
 sourceCompatibility = "1.7"
